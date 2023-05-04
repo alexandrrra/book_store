@@ -4,9 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <title>book_store</title>
 </head>
 <body>
-    <h1>Hello world!!!!!</h1>
+    <header>
+        <nav>
+            <ul>
+              <li><a href="#">Главная</a></li>
+              <li><a href="#">Каталог</a></li>
+              <li><a href="#">О нас</a></li>
+              <li><a href="#">Контакты</a></li>
+            </ul>
+            <form action="#" method="get">
+                <input type="text" placeholder="Поиск">
+                <button type="submit">Найти</button>
+              </form>
+              <div class="cart">
+                <a href="#">
+                  <img src="cart-icon.png" alt="Корзина">
+                  <span>0</span>
+                </a>
+              </div>
+          </nav>
+    </header>
+    <main>
+        <section>
+          <h1>Название секции</h1>
+          <p>Описание секции</p>
+          <div class="products">
+            <div class="product">
+              <img src="product1.jpg" alt="Продукт 1">
+              <h2>Название продукта 1</h2>
+              <p>Описание продукта 1</p>
+              <button>Добавить в корзину</button>
+            </div>
+            <div class="product">
+              <img src="product2.jpg" alt="Продукт 2">
+              <h2>Название продукта 2</h2>
+              <p>Описание продукта 2</p>
+              <button>Добавить в корзину</button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <p>Название вашего магазина &copy; 2023</p>
+      </footer>
 </body>
 </html>
