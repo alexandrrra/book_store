@@ -1,0 +1,30 @@
+/*импортировать сюда шрифты*/
+
+:root{
+    --black:#22202e;
+    --red:#f03d33;
+    --dark-blue:#343239;
+    --gray:#666564;
+    --white:#fbf9fb;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Satoshi', sans-serif;
+    font-family: 'Clash Display', sans-serif;
+    font-size: 16px;
+}
+
+img{
+    max-width: 100%;
+}
+
+.container{
+    max-width: 1440px;
+    margin: auto;
+}
