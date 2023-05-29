@@ -1,6 +1,8 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import TheIndex from "@/Views/TheIndex.vue";
-import TheBook from "@/components/TheBook.vue";
+import TheCatalog from "@/Views/TheCatalog.vue";
+import TheBookCard from "@/Views/TheBookCard.vue";
+import TheProfile from "@/Views/TheProfile.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -11,10 +13,20 @@ const router = createRouter({
             component:TheIndex
         },
         {
-            path:'/books/:id',
-            name:'Book',
-            component: TheBook
+            path:'/Catalog',
+            name:'Catalog',
+            component:TheCatalog
         },
+        {
+            path:'/book/:id',
+            name:'BookCard',
+            component: TheBookCard
+        },
+        {
+            path:'/profile',
+            name:'Profile',
+            component: TheProfile
+        }
     ],
 });
 
