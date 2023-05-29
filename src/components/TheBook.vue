@@ -5,6 +5,7 @@
     </router-link>
     <router-link to="/" class="book-name">{{title}}</router-link>
     <span class="book-price">{{price}}</span>
+    <span class="book-page">{{page_count}}</span>
   </div>
 </template>
 
@@ -18,6 +19,14 @@
     title: {
       type: String,
       required: true
+    },
+    author:{
+      type: String,
+      required:true
+    },
+    page_count:{
+      type: Number,
+      required:true
     },
     price: {
       type: Number,

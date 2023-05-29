@@ -14,7 +14,7 @@ export async function getBooks() {
 }
 
 //получить книгу
-export async function getBook(id) {
+export async function getOneBook(id) {
   try {
     const response = await axios.get(`${API_URL}/books/${id}`);
     return response.data;

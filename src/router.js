@@ -18,7 +18,7 @@ const router = createRouter({
             component:TheCatalog
         },
         {
-            path:'/book/:id',
+            path:'/books/:id',
             name:'BookCard',
             component: TheBookCard
         },
