@@ -28,9 +28,6 @@ const route = useRoute()
   onMounted(async () => {
     bookid.value = route.params.id;
     book.value = await getOneBook(bookid.value)
-    let imageUrl = book.value[0].image_url
-    imageUrl = ROOT_URL + '/' + imageUrl
-    book.value[0].image_url = imageUrl
     console.log(book.value[0])
 })
 </script>

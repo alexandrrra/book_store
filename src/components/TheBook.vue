@@ -4,7 +4,8 @@
       <img :src="img" :alt="title" class="book-image">
     </router-link>
     <router-link to="/" class="book-name">{{title}}</router-link>
-    <span class="book-price">{{price}}</span>
+    <span class="book-author">{{author}}</span>
+    <span class="book-price">{{price}} ₽</span>
     <span class="book-page">{{page_count}}</span>
   </div>
 </template>
