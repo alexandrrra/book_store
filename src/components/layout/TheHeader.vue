@@ -52,8 +52,8 @@
 
 const menu = [
   {
-    name: 'Название',
-    path: '/path'
+    name: 'Каталог',
+    path: '/Catalog'
   },
   {
     name: 'Название',
