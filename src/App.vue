@@ -13,4 +13,5 @@ import TheFooter from "@/components/layout/TheFooter.vue"
 
 <style>
 @import '@/assets/styles/global.css';
+
 </style>

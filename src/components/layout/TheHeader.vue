@@ -2,23 +2,35 @@
   <header class="header">
     <div class="header-top">
       <div class="header-top-search">
-        <img src="/svg/icon-search.png" alt="search">
+        <form>
+          <input type="text" placeholder="Поиск...">
+          <button type="submit" class="search-button"><font-awesome-icon icon="search" /></button>
+        </form>
       </div>
-      <router-link to="/" class="header-logo"> Booklib </router-link>
+      <router-link to="/" class="header-logo"> Буклиб </router-link>
       <div class="header-top-right">
-        <div class="header-top-right-user">
+        <div class="header-top-right-item">
           <router-link to="/profile">
-            <img src="/svg/icon-user.png" alt="user">
+            <div class="icon-wrapper">
+              <font-awesome-icon icon="user" />
+            </div>
+            <span>Войти</span>
           </router-link>
         </div>
-        <div class="header-top-right-favorite">
+        <div class="header-top-right-item">
           <router-link to="/favorite">
-            <img src="/svg/icon-favorite.png" alt="favorite">
+            <div class="icon-wrapper">
+              <font-awesome-icon icon="heart" />
+            </div>
+            <span>Избранное</span>
           </router-link>
         </div>
-        <div class="header-top-right-cart">
+        <div class="header-top-right-item">
           <router-link to="/cart">
-            <img src="/svg/icon-cart.png" alt="cart">
+            <div class="icon-wrapper">
+              <font-awesome-icon icon="shopping-cart" />
+            </div>
+            <span>Корзина</span>
           </router-link>
         </div>
       </div>
@@ -32,6 +44,8 @@
     </div>
   </header>
 </template>
+
+
 
 <script setup>
 /*import { ref } from 'vue'*/
@@ -57,61 +71,118 @@ const menu = [
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap');
 
-.header{
+.header {
   height: 132px;
   background: #fff;
 }
 
-.header-top{
+.header-top {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   height: 70px;
   align-items: center;
-  border-bottom: 1px solid  rgba(0,0,0,.1);
-  margin: 0 28px;
 }
 
-.header-logo{
+.header-top-search form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.header-top-search input[type="text"] {
+  width: 93%;
+  height: 35px;
+  padding: 5px;
+  border: 1px gray solid;
+  border-radius: 5px;
+}
+
+.header-top-search button[type="submit"] {
+  background: #374785;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border: 1px gray solid;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  right: 0px; /* Изменить значение, если нужно больше отступа */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+.header-logo {
   color: black;
-  font-size: 24px;
-  text-decoration-line: none;
-  font-family: 'Clash Display', sans-serif;
+  font-size: 36px;
+  text-decoration: none;
   text-align: center;
 }
 
-.header-logo:hover{
-  color: red;
+.header-logo:hover {
+  color: #F76C6C;
 }
 
-.header-top-right{
+.header-top-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.header-top-right-user,
-.header-top-right-favorite,
-.header-top-right-cart{
-  margin-right:16px;
+.header-top-right-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 16px;
 }
 
-.header-menu{
+.header-top-right-item .icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px auto;
+  color: #2f2e2e;
+  font-size: 20px;
+}
+
+.header-top-right-item .icon-wrapper:hover{
+  color: #F76C6C;
+}
+
+.header-top-right-item span {
+  font-size: 12px;
+  color: black;
+  text-decoration: none;
+}
+
+.header-menu {
+  background-color: #374785;
   height: 62px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.header-menu-link{
+.header-menu-link {
+  font-weight: bold;
   margin: 0 22px;
-  color: gray;
+  color: white;
   text-decoration: none;
 }
 
-.header-menu-link:hover{
-  background: var(--red);
-  color:white;
+.header-menu-link:hover {
+  color: white;
   font-weight: bold;
+  text-decoration: none;
 }
+
 </style>
+
+
+
+
+

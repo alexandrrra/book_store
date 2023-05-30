@@ -1,22 +1,26 @@
 /*импортировать сюда шрифты*/
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap');
 
 :root{
     --black:#22202e;
     --red:#f03d33;
     --dark-blue:#343239;
     --gray:#666564;
-    --white:#fbf9fb;
+    --white: #eedbdb;
 }
 
 *{
     box-sizing: border-box;
 }
 
+.header{
+    font-family: 'Nunito', sans-serif;
+}
+
 body{
     margin: 0;
     padding: 0;
-    font-family: 'Satoshi', sans-serif;
-    font-family: 'Clash Display', sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-size: 16px;
 }
 
