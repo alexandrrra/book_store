@@ -5,7 +5,7 @@
     </router-link>
     <router-link to="/" class="book-name">{{title}}</router-link>
     <span class="book-author">{{author}}</span>
-    <span class="book-price">{{price}} ₽</span>
+    <span class="book-price">{{price}}</span>
     <span class="book-page">{{page_count}}</span>
   </div>
 </template>
@@ -47,14 +47,20 @@
   display: block;
   color: black;
   font-size: 20px;
+  font-weight: bold;
   line-height: 28px;
   margin-bottom: 8px;
   text-decoration: none;
 }
 
+.book-author{
+  font-size: 16px;
+}
+
 .book-price{
   display: block;
   font-size: 18px;
+  font-weight: bold;
   color: black;
 }
 </style>

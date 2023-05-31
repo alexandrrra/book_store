@@ -1,6 +1,5 @@
 <template>
-  это страница книги
-  <div>
+  <div class="book">
     <the-book
         v-for="element of book"
         :key="element.id"
@@ -17,9 +16,6 @@ import TheBook from "@/components/TheBook.vue";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import {getOneBook} from "@/api/api";
-import {defineComponent} from "vue";
-import router from "@/router";
-import {ROOT_URL} from "@/api/api";
 
 const route = useRoute()
   const book = ref([])

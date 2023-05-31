@@ -1,18 +1,18 @@
 <template>
   <div class="filters-container">
-    <h2 class="filters-title">Фильтры</h2>
     <div class="filters-row">
-      <label class="filters-label">Цена от:</label>
-      <input type="number" v-model="minPrice" class="filters-input" />
+      <h4>Цена</h4>
+      <div class="inputs">
+        <label class="filters-label">От:</label>
+        <input type="number" v-model="minPrice" class="filters-input" />
+        <label class="filters-label">До:</label>
+        <input type="number" v-model="maxPrice" class="filters-input" />
+      </div>
     </div>
     <div class="filters-row">
-      <label class="filters-label">Цена до:</label>
-      <input type="number" v-model="maxPrice" class="filters-input" />
-    </div>
-    <div class="filters-row">
-      <label class="filters-label">Фильтровать по автору:</label>
+      <label class="filters-label">Автор</label>
       <div v-for="author in authors" :key="author.id" class="filters-checkbox">
-        <input type="checkbox" :value="author.name" v-model="selectedAuthors" />
+        <input class="checkbox" type="checkbox" :value="author.name" v-model="selectedAuthors" />
         <span>{{ author.name }}</span>
       </div>
     </div>
@@ -59,14 +59,15 @@ export default {
   background-color: #f5f5f5;
 }
 
-.filters-title {
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
 
 .filters-row {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.inputs{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
 }
 
 .filters-label {
@@ -74,10 +75,10 @@ export default {
 }
 
 .filters-input {
-  width: 100px;
+  width: 30%;
   padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 .filters-checkbox {
@@ -86,13 +87,35 @@ export default {
   margin-bottom: 5px;
 }
 
-.filters-checkbox input {
+.checkbox {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   margin-right: 5px;
+}
+
+.checkbox:checked {
+  background-color: #374785;
+  border-color: #374785;
+}
+
+.checkbox:checked::before {
+  content: '✔';
+  display: block;
+  text-align: center;
+  color: #fff;
+}
+
+.filters-checkbox span {
+  font-size: 14px;
 }
 
 .filters-button {
   padding: 10px 20px;
   background-color: #374785;
+  font-weight: bold;
   color: #fff;
   border: none;
   border-radius: 4px;
