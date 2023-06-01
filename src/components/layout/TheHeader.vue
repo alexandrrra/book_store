@@ -181,8 +181,3 @@ const menu = [
 }
 
 </style>
-
-
-
-
-
