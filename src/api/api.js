@@ -27,3 +27,91 @@ export async function getOneBook(id) {
     console.error('There was an error!', error);
   }
 }
+
+export const createUser = async data => {
+  try {
+      const response = await axios.post(
+          `${API_URL}/user`,
+          data
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const setToken = async (login, password) => {
+  try {
+      const response = await axios.post(
+          `${API_URL}/token`,
+          { login, password }
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const refreshToken = async () => {
+  try {
+      const response = await axios.put(
+          `${API_URL}/token`
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const deleteToken = async () => {
+  try {
+      await axios.delete(
+          `${API_URL}/token`
+      );
+      return true;
+  } catch (error) {
+      console.error(error);
+      return false;
+  }
+};
+
+export const getProfile = async () => {
+  try {
+      const response = await axios.get(
+          `${API_URL}/profile`
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const updateProfile = async data => {
+  try {
+      const response = await axios.put(
+          `${API_URL}/profile`,
+          data
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const sendOneTimePassword = async email => {
+  try {
+      await axios.post(
+          `${API_URL}/sendOneTimePassword`,
+          { email }
+      );
+      return true;
+  } catch (error) {
+      console.error(error);
+      return false;
+  }
+};
