@@ -3,23 +3,19 @@
     <div class="profile-navigation">
       <div class="profile-navigation-container">
         <div class="navigation-item" @click="setVariant('view')">
-          <font-awesome-icon icon="user" />
+          <font-awesome-icon icon="user" class="icon" />
           <span>Профиль</span>
         </div>
         <div class="navigation-item" @click="setVariant('edit')">
-          <font-awesome-icon icon="heart" />
-          <span>Личные данные</span>
+          <font-awesome-icon icon="pen" class="icon" />
+          <span>Редактировать</span>
         </div>
         <div class="navigation-item" @click="setVariant('orders')">
-          <font-awesome-icon icon="heart" />
+          <font-awesome-icon icon="book" class="icon" />
           <span>Заказы</span>
         </div>
-        <div class="navigation-item" @click="setVariant('favourites')">
-          <font-awesome-icon icon="heart" />
-          <span>Избранное</span>
-        </div>
-        <div class="navigation-item" @click="onExitClick()">
-          <font-awesome-icon icon="heart" class="SignOut"/>
+        <div class="navigation-item sign-out" @click="onExitClick()">
+          <font-awesome-icon icon="person-walking-arrow-right" class="icon" />
           <span>Выйти</span>
         </div>
       </div>
@@ -27,7 +23,7 @@
     <div class="info">
       <template v-if="variant==='view' || variant==='edit'">
         <h1 v-if="variant==='view'">Профиль</h1>
-        <h1 v-else>Личные данные</h1>
+        <h1 v-else>Редактирование профиля</h1>
         <div class="info-container">
           <span class="p-float-label row" v-for="field in profileFields" :key="field.label">
               <div class="label">{{ field.label }}</div>
@@ -148,7 +144,7 @@ const onSaveClick = async () => {
   background-color: rgba(168, 208, 230, 0.96);
 }
 
-.SignOut {
+.sign-out {
   color: #F76C6C;
 }
 
@@ -165,6 +161,12 @@ const onSaveClick = async () => {
 
 .label {
   font-size: 12px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  padding: 4px;
 }
 
 </style>

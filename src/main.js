@@ -2,7 +2,10 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUser, faHeart, faShoppingCart, faSearch, faIdCard, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import {
+    faUser, faHeart, faShoppingCart, faSearch, faIdCard, faSignOut,
+    faPersonWalkingArrowRight, faPen, faBook
+} from '@fortawesome/free-solid-svg-icons';
 import router from './router'
 import PrimeVue from 'primevue/config';
 import "primevue/resources/themes/lara-light-indigo/theme.css";
@@ -14,7 +17,10 @@ import InputText from "primevue/inputtext"
 import Button from "primevue/button"
 import Password from 'primevue/password';
 
-library.add(faUser, faHeart, faShoppingCart, faSearch, faIdCard, faSignOut);
+library.add(
+    faUser, faHeart, faShoppingCart, faSearch, faIdCard, faSignOut,
+    faPersonWalkingArrowRight, faPen, faBook
+);
 
 const app = createApp(App);
 

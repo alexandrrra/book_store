@@ -7,40 +7,37 @@
           <button type="submit" class="search-button"><font-awesome-icon icon="search" /></button>
         </form>
       </div>
-      <router-link to="/" class="header-logo"> Буклиб </router-link>
+      <router-link to="/" class="header-logo-link hover">Буклиб</router-link>
       <div class="header-top-right">
-        <div class="header-top-right-item">
-          <router-link to="/profile">
-            <div class="icon-wrapper">
-              <font-awesome-icon icon="user" />
-            </div>
+        <router-link to="/profile" class="header-top-right-link">
+          <div class="header-top-right-item">
+            <font-awesome-icon icon="user" class="icon hover"/>
             <span>Войти</span>
-          </router-link>
-        </div>
-        <div class="header-top-right-item">
-          <router-link to="/favorite">
-            <div class="icon-wrapper">
-              <font-awesome-icon icon="heart" />
-            </div>
+          </div>
+        </router-link>
+        <router-link to="/favorite" class="header-top-right-link">
+          <div class="header-top-right-item">
+            <font-awesome-icon icon="heart" class="icon hover"/>
             <span>Избранное</span>
-          </router-link>
-        </div>
-        <div class="header-top-right-item">
-          <router-link to="/cart">
-            <div class="icon-wrapper">
-              <font-awesome-icon icon="shopping-cart" />
-            </div>
+          </div>
+        </router-link>
+        <router-link to="/cart" class="header-top-right-link">
+          <div class="header-top-right-item">
+            <font-awesome-icon icon="shopping-cart" class="icon hover"/>
             <span>Корзина</span>
-          </router-link>
-        </div>
+          </div>
+        </router-link>
       </div>
     </div>
     <div class="header-menu">
       <router-link
-          class="header-menu-link"
+          class="header-menu-link hover"
           :to="element.path"
           v-for="(element,i) of menu"
-          :key="i">{{element.name}}</router-link>
+          :key="i"
+        >
+          {{element.name}}
+        </router-link>
     </div>
   </header>
 </template>
@@ -115,48 +112,45 @@ const menu = [
   transform: translateY(-50%);
 }
 
-
-.header-logo {
+.header-logo-link {
   color: black;
   font-size: 36px;
-  text-decoration: none;
   text-align: center;
+  text-decoration: none;
 }
 
-.header-logo:hover {
+.hover:hover {
   color: #F76C6C;
+}
+
+.header-top-right-link {
+  text-decoration: none;
 }
 
 .header-top-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 16px;
+  padding: 0 16px;
 }
 
 .header-top-right-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 16px;
 }
 
-.header-top-right-item .icon-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 5px auto;
+.icon {
+  padding: 8px;
   color: #2f2e2e;
-  font-size: 20px;
-}
-
-.header-top-right-item .icon-wrapper:hover{
-  color: #F76C6C;
+  width: 24px;
+  height: 24px;
 }
 
 .header-top-right-item span {
   font-size: 12px;
   color: black;
-  text-decoration: none;
 }
 
 .header-menu {
@@ -171,12 +165,6 @@ const menu = [
   font-weight: bold;
   margin: 0 22px;
   color: white;
-  text-decoration: none;
-}
-
-.header-menu-link:hover {
-  color: white;
-  font-weight: bold;
   text-decoration: none;
 }
 
