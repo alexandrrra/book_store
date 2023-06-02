@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 export const ROOT_URL = 'http://localhost:8080';
 const API_URL = `${ROOT_URL}/api`;
 
@@ -28,11 +30,11 @@ export async function getOneBook(id) {
   }
 }
 
-export const createUser = async data => {
+export const createUser = async (login, password) => {
   try {
       const response = await axios.post(
           `${API_URL}/user`,
-          data
+          { login, password }
       );
       return response.data;
   } catch (error) {

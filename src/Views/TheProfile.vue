@@ -1,5 +1,16 @@
 <template>
   <div class="container">
+    <LoginDialog @auth="onAuth()"/>
+    <Dialog :visible="message!==''" modal :closable="false" header="Сообщение">
+        {{ message }}
+        <template #footer>
+            <div class="controls">
+                <div class="controls-row">
+                    <Button label="OK" @click="message=''" style="width: 100%"/>
+                </div>
+            </div>
+        </template>
+    </Dialog>
     <div class="profile-navigation">
       <div class="profile-navigation-container">
         <div class="navigation-item" @click="setVariant('view')">
@@ -25,16 +36,16 @@
         <h1 v-if="variant==='view'">Профиль</h1>
         <h1 v-else>Редактирование профиля</h1>
         <div class="info-container">
-          <span class="p-float-label row" v-for="field in profileFields" :key="field.label">
+          <span v-for="field in profileFields" :key="field.label">
               <div class="label">{{ field.label }}</div>
               <InputText v-model="currentProfile[field.name]" :disabled="variant==='view'" class="p-inputtext-sm" />
           </span>
-          <span v-if="variant==='edit'" class="p-float-label row">
+          <span v-if="variant==='edit'">
               <div class="label">Пароль</div>
               <Password v-model="password" :disabled="variant==='view'" class="p-inputtext-sm" />
           </span>
           <div v-show="variant==='edit'" class="card flex justify-content-center">
-            <Button label="Сохранить" @click="onSaveClick()"/>
+            <Button label="Сохранить" @click="onSaveClick()" :disabled="isEqual(profile, currentProfile)"/>
           </div>
         </div>
       </template>
@@ -44,8 +55,13 @@
 
 <script setup>
 
-import {ref, onMounted} from 'vue'
+import LoginDialog from '@/components/LoginDialog.vue';
+import {ref, onMounted, inject} from 'vue'
 import { deleteToken, getProfile, updateProfile } from '../api/api';
+import router from "@/router.js";
+import {isEqual} from "lodash";
+
+const $cookies = inject('$cookies');
 
 const profileFields = [
   {
@@ -87,9 +103,15 @@ const variant = ref("view");
 const profile = ref({...defaultProfile});
 const currentProfile = ref({...defaultProfile});
 const password = ref("");
+const message = ref("");
 
 onMounted(async () => {
-  await getProfile();
+  const newProfile = await getProfile();
+  if (newProfile === null) {
+    return;
+  }
+  profile.value = {...newProfile};
+  currentProfile.value = {...newProfile};
 });
 
 const setVariant = newVariant => {
@@ -102,11 +124,30 @@ const setVariant = newVariant => {
 
 const onExitClick = async () => {
   await deleteToken();
+  $cookies.remove("user_id");
+  $cookies.remove("token");
+  router.push("/");
 };
 
 const onSaveClick = async () => {
-  await updateProfile({...profile.value, password: password.value});
-  profile.value = {...currentProfile.value};
+  const newProfile = await updateProfile({...currentProfile.value, password: password.value});
+  if (newProfile === null) {
+    message.value = "Что-то пошло не так";
+    return;
+  }
+  profile.value = {...newProfile, password: ""};
+  currentProfile.value = {...newProfile, password: ""};
+  message.value = "Сохранено";
+};
+
+const onAuth = async () => {
+  const newProfile = await getProfile();
+  if (newProfile === null) {
+    message.value = "Что-то пошло не так";
+    return;
+  }
+  profile.value = {...newProfile};
+  currentProfile.value = {...newProfile};
 };
 
 </script>
@@ -150,7 +191,7 @@ const onSaveClick = async () => {
 
 .info {
   width: 70%;
-  padding-bottom: 8px;
+  padding-bottom: 24px;
 }
 
 .info-container {

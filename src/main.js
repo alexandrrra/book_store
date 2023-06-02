@@ -16,6 +16,8 @@ import BadgeDirective from "primevue/badgedirective";
 import InputText from "primevue/inputtext"
 import Button from "primevue/button"
 import Password from 'primevue/password';
+import Dialog from 'primevue/dialog';
+import VueCookies from 'vue-cookies'
 
 library.add(
     faUser, faHeart, faShoppingCart, faSearch, faIdCard, faSignOut,
@@ -29,6 +31,7 @@ app.use(router);
 app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.use(PrimeVue, { ripple: true });
+app.use(VueCookies, { expires: '365d'})
 
 app.directive('ripple', Ripple);
 app.directive('badge', BadgeDirective);
@@ -36,5 +39,6 @@ app.directive('badge', BadgeDirective);
 app.component('InputText', InputText);
 app.component('Button', Button);
 app.component('Password', Password);
+app.component('Dialog', Dialog);
 
 app.mount('#app');
