@@ -23,21 +23,19 @@ const props = defineProps(
 </script>
 
 <style scoped>
+
 .btn{
-  background: #22202e;
+  background: var(--blue);
+  padding-left: 16px;
+  padding-right:16px;
+  height:38px;
   color: white;
-  padding: 0 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-  border: none;
-  font-size: 16px;
-  height: 56px;
-  border-radius: 10px;
+  font-size: 14px;
+  border-radius: 5px;
 }
 
 .btn:hover{
-  opacity: 0.8;
+  background: var(--dark-blue);
 }
 </style>

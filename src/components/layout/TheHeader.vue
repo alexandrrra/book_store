@@ -1,42 +1,43 @@
 <template>
-  <header class="header">
-    <div class="header-top">
-      <div class="header-top-search">
+  <header class="header-container">
+    <div class="header_container__logo">
+      <router-link to="/" class="header-container__logo-name">Буклиб</router-link>
+      <span>Интернет-магазин книг</span>
+    </div>
+
+    <div class="header-container__search-catalog">
+      <the-button to="/catalog">
+          <router-link to="/catalog" class="catalog_link">Каталог</router-link>
+        <font-awesome-icon icon="book" class="icon-book"/>
+      </the-button>
+      <div class="search-form">
         <form>
-          <input type="text" placeholder="Поиск...">
-          <button type="submit" class="search-button"><font-awesome-icon icon="search" /></button>
+          <input type="text" placeholder="Я ищу...">
+          <the-button>
+            <font-awesome-icon icon="search"/>
+          </the-button>
         </form>
       </div>
-      <router-link to="/" class="header-logo-link hover">Буклиб</router-link>
-      <div class="header-top-right">
-        <router-link to="/profile" class="header-top-right-link">
-          <div class="header-top-right-item">
-            <font-awesome-icon icon="user" class="icon hover"/>
-            <span>{{ store.state.login || "Войти" }}</span>
-          </div>
-        </router-link>
-        <router-link to="/favorite" class="header-top-right-link">
-          <div class="header-top-right-item">
-            <font-awesome-icon icon="heart" class="icon hover"/>
-            <span>Избранное</span>
-          </div>
-        </router-link>
-        <router-link to="/cart" class="header-top-right-link">
-          <div class="header-top-right-item">
-            <font-awesome-icon icon="shopping-cart" class="icon hover"/>
-            <span>Корзина</span>
-          </div>
-        </router-link>
-      </div>
     </div>
-    <div class="header-menu">
-      <router-link
-          class="header-menu-link hover"
-          :to="element.path"
-          v-for="(element, i) of menu"
-          :key="i"
-      >
-        {{element.name}}
+
+    <div class="header-right">
+      <router-link to="/profile" class="header-right-link">
+        <div class="header-right-item">
+          <font-awesome-icon icon="user" class="icon hover"/>
+          <span>{{ store.state.login || "Войти" }}</span>
+        </div>
+      </router-link>
+      <router-link to="/favorite" class="header-right-link">
+        <div class="header-right-item">
+          <font-awesome-icon icon="heart" class="icon hover"/>
+          <span>Избранное</span>
+        </div>
+      </router-link>
+      <router-link to="/cart" class="header-right-link">
+        <div class="header-right-item">
+          <font-awesome-icon icon="shopping-cart" class="icon hover"/>
+          <span>Корзина</span>
+        </div>
       </router-link>
     </div>
   </header>
@@ -45,99 +46,97 @@
 <script setup>
 
 import { useStore } from 'vuex'
+import TheButton from "@/components/UI/TheButton.vue";
 
-const menu = [
-  {
-    name: 'Каталог',
-    path: '/catalog'
-  },
-  {
-    name: 'Название',
-    path: '/path'
-  },
-  {
-    name: 'Название',
-    path: '/path'
-  },
-  {
-    name: 'Название',
-    path: '/path'
-  }
-]
+// const menu = [
+//   {
+//     name: 'Каталог',
+//     path: '/catalog'
+//   },
+//   {
+//     name: 'Название',
+//     path: '/path'
+//   },
+//   {
+//     name: 'Название',
+//     path: '/path'
+//   },
+//   {
+//     name: 'Название',
+//     path: '/path'
+//   }
+// ]
 
 const store = useStore();
 
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap');
 
-.header {
-  height: 132px;
-  background: #fff;
-}
-
-.header-top {
+.header-container {
+  /*position:fixed;*/
+  background:white;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  height: 70px;
   align-items: center;
+  border-bottom:1px solid var(--black);
 }
 
-.header-top-search form {
-  width: 100%;
+.header_container__logo{
   display: flex;
-  align-items: center;
-  position: relative;
+  flex-direction: column;
+  align-items:center;
 }
 
-.header-top-search input[type="text"] {
-  width: 93%;
-  height: 35px;
-  padding: 5px;
-  border: 1px gray solid;
-  border-radius: 5px;
+.header-container__logo-name {
+  font-family: 'Playfair', serif;
+  color:var(--black);
+  font-size: 40px;
+  font-weight:bold;
 }
 
-.header-top-search button[type="submit"] {
-  background: #374785;
-  color: white;
-  width: 35px;
-  height: 35px;
-  border: 1px gray solid;
-  border-radius: 5px;
-  cursor: pointer;
-  position: absolute;
-  right: 0px; /* Изменить значение, если нужно больше отступа */
-  top: 50%;
-  transform: translateY(-50%);
+.header-container__logo-name:hover{
+  color:var(--red);
 }
 
-.header-logo-link {
-  color: black;
-  font-size: 36px;
-  text-align: center;
-  text-decoration: none;
+.header_container__logo span{
+  font-family: 'Playfair', serif;
 }
 
-.hover:hover {
-  color: #F76C6C;
+.header-container__search-catalog{
+  display:flex;
 }
 
-.header-top-right-link {
-  text-decoration: none;
+.catalog_link{
+  color:var(--white);
+  font-weight:bold;
 }
 
-.header-top-right {
+.search-form{
+  margin-left:20px;
+}
+
+.search-form input{
+  height:40px;
+  border:1px solid var(--blue);
+  border-radius:5px;
+  padding:10px;
+}
+
+.icon-book{
+  color:var(--white);
+  padding-left:5px;
+}
+
+.header-right {
   display: flex;
-  align-items: center;
   justify-content: flex-end;
   gap: 16px;
   padding: 0 16px;
 }
 
-.header-top-right-item {
+.header-right-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -150,23 +149,13 @@ const store = useStore();
   height: 24px;
 }
 
-.header-top-right-item span {
-  font-size: 12px;
+.icon:hover{
+  color:var(--red);
+}
+
+.header-right-item span {
+  font-size: 14px;
   color: black;
 }
 
-.header-menu {
-  background-color: #374785;
-  height: 62px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.header-menu-link {
-  font-weight: bold;
-  margin: 0 22px;
-  color: white;
-  text-decoration: none;
-}
 </style>
