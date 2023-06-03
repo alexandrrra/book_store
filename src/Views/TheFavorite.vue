@@ -11,8 +11,11 @@
             </div>
         </template>
     </Dialog>
-    <div>
-      Favorite
+    <div v-if="favorites.length > 0" class="books">
+      <the-book v-for="book of favorites" :key="book.book_id" :book="book" variant="favorite" @remove="onRemove(book.book_id)"/>
+    </div>
+    <div v-else class="books">
+      <h1>Спиок избранного пуст</h1>
     </div>
   </div>
 </template>
@@ -20,21 +23,26 @@
 <script setup>
 
 import LoginDialog from '@/components/LoginDialog.vue';
+import TheBook from "@/components/TheBook.vue";
 import { ref, onMounted } from 'vue'
-import { getFavorite } from '../api/api';
+import { getFavorites } from '../api/api';
 
 const message = ref("");
-const favorite = ref([]);
+const favorites = ref([]);
 
-const loadFavorite = async () => {
-  const newFavorite = await getFavorite();
-  if (newFavorite === null) {
+const loadFavorites = async () => {
+  const newFavorites = await getFavorites();
+  if (newFavorites === null) {
       return;
   }
-  favorite.value = {...newFavorite};
+  favorites.value = [...newFavorites];
 };
 
-onMounted(loadFavorite);
+onMounted(loadFavorites);
+
+const onRemove = id => {
+  favorites.value = favorites.value.filter(x => x.book_id !== id);
+};
 
 </script>
 
@@ -42,6 +50,16 @@ onMounted(loadFavorite);
 
 .container {
   display: flex;
+}
+
+.books{
+  padding: 0 80px;
+  margin: 50px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5%;
+  align-items: center;
+  justify-content: center;
 }
 
 </style>

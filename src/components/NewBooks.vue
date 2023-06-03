@@ -8,12 +8,12 @@
 
 import {ref, onMounted} from 'vue'
 import TheBook from "@/components/TheBook.vue";
-import { getNewBooks } from '../api/api';
+import { getBooks } from '../api/api';
 
 const books = ref([])
 
 onMounted(async () => {
-  books.value = await getNewBooks()
+  books.value = await getBooks(true)
 })
 
 </script>
@@ -23,7 +23,9 @@ onMounted(async () => {
   padding: 0 80px;
   margin: 50px 0;
   display: flex;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 20px;
+  flex-wrap: wrap;
+  gap: 5%;
+  align-items: center;
+  justify-content: center;
 }
 </style>
