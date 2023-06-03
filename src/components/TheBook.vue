@@ -1,39 +1,31 @@
 <template>
   <div class="book">
-    <router-link to="/">
-      <img :src="img" :alt="title" class="book-image">
+    <router-link :to="`/books/${book.book_id}`">
+      <img :src="book.image_url" :alt="title" class="book-image">
     </router-link>
-    <router-link to="/" class="book-name">{{title}}</router-link>
-    <span class="book-author">{{author}}</span>
-    <span class="book-price">{{price}}</span>
-    <span class="book-page">{{page_count}}</span>
+    <router-link :to="`/books/${book.book_id}`" class="book-name">{{book.title}}</router-link>
+    <span class="book-author">{{book.author}}</span>
+    <span class="book-price">{{book.price}} ₽</span>
+    <span class="book-page">{{book.page_count}} с</span>
+
   </div>
 </template>
 
 <script setup>
-  import { defineProps } from 'vue';
-  const props = defineProps({
-    img: {
-      type: String,
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    author:{
-      type: String,
-      required:true
-    },
-    page_count:{
-      type: Number,
-      required:true
-    },
-    price: {
-      type: Number,
-      required: true
-    }
-  });
+
+import { defineProps } from 'vue';
+
+defineProps({
+  book: {
+    type: Object,
+    required: true,
+  },
+  variant: {
+    type: String,
+    required: true
+  }
+});
+
 </script>
 
 <style scoped>

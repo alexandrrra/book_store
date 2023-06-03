@@ -9,13 +9,30 @@ const API_URL = `${ROOT_URL}/api`;
 export async function getBooks() {
   try {
     const response = await axios.get(`${API_URL}/books`);
-    const books = response.data.map((book) => {
-      book.image_url = ROOT_URL + '/' + book.image_url;
-      return book;
-    });
-    return books;
+    return response.data.map(
+      book => ({
+        ...book,
+        image_url: ROOT_URL + '/' + book.image_url
+      })
+    );
   } catch (error) {
     console.error('There was an error!', error);
+    return [];
+  }
+}
+
+export async function getNewBooks() {
+  try {
+    const response = await axios.get(`${API_URL}/newBooks`);
+    return response.data.map(
+      book => ({
+        ...book,
+        image_url: ROOT_URL + '/' + book.image_url
+      })
+    );
+  } catch (error) {
+    console.error('There was an error!', error);
+    return [];
   }
 }
 
@@ -23,10 +40,13 @@ export async function getBooks() {
 export async function getOneBook(id) {
   try {
     const response = await axios.get(`${API_URL}/books/${id}`);
-    response.data[0].image_url = ROOT_URL + '/' + response.data[0].image_url
-    return response.data;
+    return {
+      ...response.data,
+      image_url: ROOT_URL + '/' + response.data.image_url
+    };
   } catch (error) {
     console.error('There was an error!', error);
+    return null;
   }
 }
 

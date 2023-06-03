@@ -7,7 +7,7 @@
     </div>
     <div class="catalog">
       <div class="book" v-for="book of filteredBooks" :key="book.id">
-        <img :src="book.image_url" alt="Book Cover" class="book-img" />
+        <img :src="book.image_url" :alt="book.title" class="book-img" />
         <div class="book-info">
           <h3 class="book-title">{{ book.title }}</h3>
           <p class="book-author">{{ book.author }}</p>
