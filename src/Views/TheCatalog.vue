@@ -6,18 +6,7 @@
       <the-filter @apply-filters="applyFilters"></the-filter>
     </div>
     <div class="catalog">
-      <div class="book" v-for="book of filteredBooks" :key="book.id">
-        <img :src="book.image_url" alt="Book Cover" class="book-img" />
-        <div class="book-info">
-          <h3 class="book-title">{{ book.title }}</h3>
-          <p class="book-author">{{ book.author }}</p>
-          <p class="book-price">{{ book.price }} ₽</p>
-          <div class="button-icon">
-            <button class="buy-button">Купить</button>
-            <font-awesome-icon class="heart" icon="heart" />
-          </div>
-        </div>
-      </div>
+      <the-book v-for="book of filteredBooks" :key="book.book_id" :book="book"/>
     </div>
   </div>
 </template>
@@ -70,58 +59,9 @@ const applyFilters = (filters) => {
   width: 70%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.book {
-  width: 23%;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
+  gap: 5%;
   align-items: center;
+  justify-content: center;
 }
-
-.book-img {
-  width: 80%;
-  height: auto;
-  object-fit: cover;
-}
-
-.book-title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.book-author {
-  font-size: 14px;
-}
-
-.book-price {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.buy-button {
-  padding: 7px 12px;
-  background-color: #374785;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-
-.button-icon{
-  display: flex;
-  justify-content: space-around;
-}
-
-.heart{
-  font-size: 20px;
-  text-align: right;
-  color: #F76C6C;
-}
-
 
 </style>

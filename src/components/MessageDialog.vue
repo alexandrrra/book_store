@@ -1,6 +1,6 @@
 <template>
-  <Dialog :visible="props.message!=''" modal :closable="false" header="Сообщение">
-    {{ props.message }}
+  <Dialog :visible="message!=''" modal :closable="false" header="Сообщение">
+    {{ message }}
     <template #footer>
       <div class="controls">
         <Button label="OK" @click="onClose()" style="width: 100px" />
@@ -11,7 +11,12 @@
 
 <script setup>
 
-const props = defineProps(['message'])
+defineProps({
+  message: {
+    type: String,
+    required: true
+  }
+})
 const emit = defineEmits(['close']);
 
 const onClose = async () => {

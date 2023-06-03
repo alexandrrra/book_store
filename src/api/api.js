@@ -5,30 +5,42 @@ axios.defaults.withCredentials = true;
 export const ROOT_URL = 'http://localhost:8080';
 const API_URL = `${ROOT_URL}/api`;
 
+const patchImageUrl = url => `${ROOT_URL}/${url}`;
+
 // получить каталог книг
-export async function getBooks() {
+export const getBooks = async (newOnly) => {
   try {
-    const response = await axios.get(`${API_URL}/books`);
-    const books = response.data.map((book) => {
-      book.image_url = ROOT_URL + '/' + book.image_url;
-      return book;
-    });
-    return books;
+    const response = await axios.get(
+      `${API_URL}/books`,
+      {
+        params: { newOnly }
+      }
+    );
+    return response.data.map(
+      book => ({
+        ...book,
+        image_url: patchImageUrl(book.image_url)
+      })
+    );
   } catch (error) {
-    console.error('There was an error!', error);
+    console.error(error);
+    return [];
   }
 }
 
 //получить книгу
-export async function getOneBook(id) {
+export const getOneBook = async (id) => {
   try {
     const response = await axios.get(`${API_URL}/books/${id}`);
-    response.data[0].image_url = ROOT_URL + '/' + response.data[0].image_url
-    return response.data;
+    return {
+      ...response.data,
+      image_url: patchImageUrl(response.data.image_url)
+    };
   } catch (error) {
-    console.error('There was an error!', error);
+    console.error(error);
+    return null;
   }
-}
+};
 
 export const createUser = async (login, password) => {
   try {
@@ -118,26 +130,99 @@ export const sendOneTimePassword = async email => {
   }
 };
 
-export const getFavorite = async () => {
+export const getProducts = async () => {
   try {
       const response = await axios.get(
-          `${API_URL}/user/favorite`
+          `${API_URL}/products`
       );
-      return response.data;
+      return response.data.map(
+        book => ({
+          ...book,
+          image_url: patchImageUrl(book.image_url)
+        })
+      );
   } catch (error) {
       console.error(error);
       return null;
   }
 };
 
-export const getCart = async () => {
+export const addProduct = async (id) => {
+  try {
+    await axios.post(
+      `${API_URL}/products`,
+      {id}
+    );
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+export const updateProduct = async (id, quantity) => {
+  try {
+    await axios.put(
+      `${API_URL}/products/${id}`,
+      {quantity}
+    );
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+export const deleteProduct = async (id) => {
+  try {
+    await axios.delete(
+      `${API_URL}/products/${id}`
+    );
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+export const getFavorites = async () => {
   try {
       const response = await axios.get(
-          `${API_URL}/user/cart`
+          `${API_URL}/favorites`
       );
-      return response.data;
+      return response.data.map(
+        book => ({
+          ...book,
+          image_url: patchImageUrl(book.image_url)
+        })
+      );
   } catch (error) {
       console.error(error);
       return null;
+  }
+};
+
+export const addFavorite = async (id) => {
+  try {
+    await axios.post(
+      `${API_URL}/favorites`,
+      {id}
+    );
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+export const deleteFavorite = async (id) => {
+  try {
+    await axios.delete(
+      `${API_URL}/favorites/${id}`
+    );
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
   }
 };

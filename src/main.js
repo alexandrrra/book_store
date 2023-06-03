@@ -25,8 +25,6 @@ import Button from "primevue/button"
 import Password from 'primevue/password';
 import Dialog from 'primevue/dialog';
 
-import TheButton from "@/components/UI/TheButton.vue";
-
 library.add(
   faUser, faHeart, faShoppingCart, faSearch, faIdCard, faSignOut,
   faPersonWalkingArrowRight, faPen, faBook
@@ -47,6 +45,5 @@ app.component('InputText', InputText);
 app.component('Button', Button);
 app.component('Password', Password);
 app.component('Dialog', Dialog);
-app.component('MyButton', TheButton);
 
 app.mount('#app');
