@@ -12,7 +12,7 @@
         <router-link to="/profile" class="header-top-right-link">
           <div class="header-top-right-item">
             <font-awesome-icon icon="user" class="icon hover"/>
-            <span>Войти</span>
+            <span>{{ store.state.login || "Войти" }}</span>
           </div>
         </router-link>
         <router-link to="/favorite" class="header-top-right-link">
@@ -33,24 +33,23 @@
       <router-link
           class="header-menu-link hover"
           :to="element.path"
-          v-for="(element,i) of menu"
+          v-for="(element, i) of menu"
           :key="i"
-        >
-          {{element.name}}
-        </router-link>
+      >
+        {{element.name}}
+      </router-link>
     </div>
   </header>
 </template>
 
-
-
 <script setup>
-/*import { ref } from 'vue'*/
+
+import { useStore } from 'vuex'
 
 const menu = [
   {
     name: 'Каталог',
-    path: '/Catalog'
+    path: '/catalog'
   },
   {
     name: 'Название',
@@ -65,6 +64,9 @@ const menu = [
     path: '/path'
   }
 ]
+
+const store = useStore();
+
 </script>
 
 <style scoped>
@@ -167,5 +169,4 @@ const menu = [
   color: white;
   text-decoration: none;
 }
-
 </style>

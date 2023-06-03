@@ -117,3 +117,27 @@ export const sendOneTimePassword = async email => {
       return false;
   }
 };
+
+export const getFavorite = async () => {
+  try {
+      const response = await axios.get(
+          `${API_URL}/user/favorite`
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const getCart = async () => {
+  try {
+      const response = await axios.get(
+          `${API_URL}/user/cart`
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
