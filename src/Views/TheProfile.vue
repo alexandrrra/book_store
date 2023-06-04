@@ -4,15 +4,15 @@
     <MessageDialog :message="message" @close="message=''"/>
     <div class="profile-navigation">
       <div class="profile-navigation-container">
-        <div class="navigation-item" @click="setVariant('view')">
+        <div :class="['navigation-item', variant==='view' ? 'active' : '']" @click="setVariant('view')">
           <font-awesome-icon icon="user" class="icon" />
           <span>Профиль</span>
         </div>
-        <div class="navigation-item" @click="setVariant('edit')">
+        <div :class="['navigation-item', variant==='edit' ? 'active' : '']" @click="setVariant('edit')">
           <font-awesome-icon icon="pen" class="icon" />
           <span>Редактировать</span>
         </div>
-        <div class="navigation-item" @click="setVariant('orders')">
+        <div :class="['navigation-item', variant==='orders' ? 'active' : '']" @click="setVariant('orders')">
           <font-awesome-icon icon="book" class="icon" />
           <span>Заказы</span>
         </div>
@@ -24,8 +24,6 @@
     </div>
     <div class="info">
       <template v-if="variant === 'view' || variant === 'edit'">
-        <h1 v-if="variant === 'view'">Профиль</h1>
-        <h1 v-else>Редактирование профиля</h1>
         <div class="info-container">
           <span v-for="field in profileFields" :key="field.name">
             <div class="label">{{ field.label }}</div>
@@ -51,7 +49,7 @@ import MessageDialog from '@/components/MessageDialog.vue';
 import { useStore } from 'vuex';
 import { inject, ref, onMounted } from 'vue'
 import { getProfile, updateProfile, deleteToken } from '../api/api';
-import router from "@/router.js";
+import { useRouter } from "vue-router";
 import { isEqual } from "lodash";
 
 const profileFields = [
@@ -83,6 +81,7 @@ const profileFields = [
 
 const store = useStore()
 const $cookies = inject('$cookies');
+const router = useRouter();
 
 const message = ref("");
 const variant = ref("view");
@@ -139,7 +138,6 @@ const onExitClick = async () => {
 }
 
 .profile-navigation {
-  margin-top: 50px;
   width: 40%;
 }
 
@@ -161,18 +159,13 @@ const onExitClick = async () => {
   padding-left: 10px;
 }
 
-.navigation-item:hover {
-  font-weight: bold;
-  background-color: rgba(168, 208, 230, 0.96);
-}
-
-.exit {
+.active {
   color: #F76C6C;
 }
 
 .info {
   width: 70%;
-  padding-bottom: 24px;
+  padding: 24px 0 24px;
 }
 
 .info-container {

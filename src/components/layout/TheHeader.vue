@@ -7,23 +7,23 @@
           <button type="submit" class="search-button"><font-awesome-icon icon="search" /></button>
         </form>
       </div>
-      <router-link to="/" class="header-logo-link hover">Буклиб</router-link>
+      <router-link to="/" class="header-logo-link">Буклиб</router-link>
       <div class="header-top-right">
-        <router-link to="/profile" class="header-top-right-link">
+        <router-link to="/profile" :class="['header-top-right-link', , route.path === '/profile' ? 'active' : 'normal']">
           <div class="header-top-right-item">
-            <font-awesome-icon icon="user" class="icon hover"/>
+            <font-awesome-icon icon="user" class="icon"/>
             <span>{{ store.state.login || "Войти" }}</span>
           </div>
         </router-link>
-        <router-link to="/favorite" class="header-top-right-link">
+        <router-link to="/favorite" :class="['header-top-right-link', , route.path === '/favorite' ? 'active' : 'normal']">
           <div class="header-top-right-item">
-            <font-awesome-icon icon="heart" class="icon hover"/>
+            <font-awesome-icon icon="heart" class="icon"/>
             <span>Избранное</span>
           </div>
         </router-link>
-        <router-link to="/cart" class="header-top-right-link">
+        <router-link to="/cart" :class="['header-top-right-link', , route.path === '/cart' ? 'active' : 'normal']">
           <div class="header-top-right-item">
-            <font-awesome-icon icon="shopping-cart" class="icon hover"/>
+            <font-awesome-icon icon="shopping-cart" class="icon"/>
             <span>Корзина</span>
           </div>
         </router-link>
@@ -31,7 +31,7 @@
     </div>
     <div class="header-menu">
       <router-link
-          class="header-menu-link hover"
+          :class="['header-menu-link', route.path === element.path ? 'active' : 'white']"
           :to="element.path"
           v-for="(element, i) of menu"
           :key="i"
@@ -45,6 +45,7 @@
 <script setup>
 
 import { useStore } from 'vuex'
+import {useRoute} from "vue-router";
 
 const menu = [
   {
@@ -66,6 +67,7 @@ const menu = [
 ]
 
 const store = useStore();
+const route = useRoute();
 
 </script>
 
@@ -121,8 +123,16 @@ const store = useStore();
   text-decoration: none;
 }
 
-.hover:hover {
+.active {
   color: #F76C6C;
+}
+
+.normal {
+  color: #2f2e2e;
+}
+
+.white {
+  color: white;
 }
 
 .header-top-right-link {
@@ -145,14 +155,12 @@ const store = useStore();
 
 .icon {
   padding: 8px;
-  color: #2f2e2e;
   width: 24px;
   height: 24px;
 }
 
 .header-top-right-item span {
   font-size: 12px;
-  color: black;
 }
 
 .header-menu {
@@ -166,7 +174,6 @@ const store = useStore();
 .header-menu-link {
   font-weight: bold;
   margin: 0 22px;
-  color: white;
   text-decoration: none;
 }
 </style>

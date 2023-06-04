@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <the-book v-if="book !== null" :book="book"/>
+    <the-book v-if="book !== null" :book="book" variant="card"/>
     <span v-else>Что-то пошло не так</span>
   </div>
 </template>
