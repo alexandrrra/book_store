@@ -1,16 +1,7 @@
 <template>
   <div class="container">
     <LoginDialog @auth="loadProducts()"/>
-    <Dialog :visible="message!==''" modal :closable="false" header="Сообщение">
-        {{ message }}
-        <template #footer>
-            <div class="controls">
-                <div class="controls-row">
-                    <Button label="OK" @click="message=''" style="width: 100%"/>
-                </div>
-            </div>
-        </template>
-    </Dialog>
+    <MessageDialog :message="message" @close="message=''"/>
     <div v-if="products.length > 0" class="books">
       <the-book v-for="book of products" :key="book.book_id" :book="book" variant="cart" @remove="onRemove(book.book_id)"/>
     </div>
