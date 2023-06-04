@@ -53,6 +53,7 @@ const onRemove = id => {
 }
 
 .books{
+  width: 100%;
   padding: 0 80px;
   margin: 50px 0;
   display: flex;

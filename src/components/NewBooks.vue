@@ -1,6 +1,6 @@
 <template>
   <div class="new-books">
-    <the-book v-for="book of books" :key="book.book_id" :book="book"/>
+    <the-book v-for="book of books" :key="book.book_id" :book="book" variant="new"/>
   </div>
 </template>
 

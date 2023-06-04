@@ -1,12 +1,10 @@
 <template>
-  <h1>Каталог</h1>
-
   <div class="filter-books">
     <div class="filter">
       <the-filter @apply-filters="applyFilters"></the-filter>
     </div>
     <div class="catalog">
-      <the-book v-for="book of filteredBooks" :key="book.book_id" :book="book"/>
+      <the-book v-for="book of filteredBooks" :key="book.book_id" :book="book" variant="catalog"/>
     </div>
   </div>
 </template>
@@ -16,7 +14,6 @@ import TheBook from "@/components/TheBook.vue";
 import TheFilter from "@/components/TheFilter.vue";
 import { onMounted, ref } from "vue";
 import { getBooks } from "@/api/api";
-import {ROOT_URL} from "@/api/api";
 
 const books = ref([]);
 const filteredBooks = ref([]);
@@ -53,10 +50,12 @@ const applyFilters = (filters) => {
 
 .filter {
   width: 20%;
+  margin: 50px 0;
 }
 
 .catalog {
   width: 70%;
+  margin: 50px 0;
   display: flex;
   flex-wrap: wrap;
   gap: 5%;

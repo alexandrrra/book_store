@@ -62,7 +62,7 @@ import MessageDialog from '@/components/MessageDialog.vue';
 import { useStore } from 'vuex';
 import { inject, ref } from "vue";
 import { setToken, createUser, sendOneTimePassword } from '../api/api';
-import router from "@/router.js";
+import { useRouter } from "vue-router";
 
 const header = {
   'authorization': "Авторизация",
@@ -73,6 +73,7 @@ const header = {
 const store = useStore();
 const $cookies = inject('$cookies');
 const emit = defineEmits(['auth']);
+const router = useRouter();
 
 const message = ref('');
 const variant = ref('authorization');

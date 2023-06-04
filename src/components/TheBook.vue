@@ -3,7 +3,7 @@
   <Toast />
   <div class="book">
     <router-link :to="`/books/${book.book_id}`">
-      <img :src="book.image_url" :alt="title" class="book-image">
+      <img :src="book.image_url" :alt="book.title" class="book-image">
     </router-link>
     <router-link :to="`/books/${book.book_id}`" class="book-name">{{book.title}}</router-link>
     <span class="book-author">{{book.author}}</span>
@@ -11,35 +11,35 @@
     <div class="controls">
       <template v-if="variant === 'favorite'">
         <div class="controls-row">
-          <Button label="Купить" text @click="onAddProductClick(book.book_id)"/>
-          <Button text rounded @click="deleteFavoriteClick(book.book_id)">
+          <Button label="Купить" text @click="onAddProductClick()"/>
+          <Button text rounded @click="deleteFavoriteClick()">
             <font-awesome-icon icon="trash-can"/>
           </Button>
         </div>
       </template>
       <template v-else-if="variant === 'cart'">
         <div class="controls-row">
-          <Button text rounded @click="setQuantityClick(book.book_id, quantity > 1 ? quantity - 1 : quantity)">
+          <Button text rounded @click="setQuantityClick(quantity > 1 ? quantity - 1 : quantity)">
             <font-awesome-icon icon="minus"/>
           </Button>
           {{ quantity }}
-          <Button text rounded @click="setQuantityClick(book.book_id, quantity + 1)">
+          <Button text rounded @click="setQuantityClick(quantity + 1)">
             <font-awesome-icon icon="plus"/>
           </Button>
         </div>
         <div class="controls-row">
-          <Button text rounded @click="deleteProductClick(book.book_id)">
+          <Button text rounded @click="deleteProductClick()">
             <font-awesome-icon icon="trash-can"/>
           </Button>
-          <Button text rounded @click="addFavoriteClick(book.book_id)">
+          <Button text rounded @click="addFavoriteClick()">
             <font-awesome-icon icon="heart" class="heart"/>
           </Button>
         </div>
       </template>
       <template v-else>
         <div class="controls-row">
-          <Button label="Купить" text @click="onAddProductClick(book.book_id)"/>
-          <Button text rounded @click="addFavoriteClick(book.book_id)">
+          <Button label="Купить" text @click="onAddProductClick()"/>
+          <Button text rounded @click="addFavoriteClick()">
             <font-awesome-icon icon="heart" class="heart"/>
           </Button>
         </div>
@@ -73,17 +73,17 @@ const props = defineProps({
 
 const quantity = ref(props.book.quantity);
 
-const onAddProductClick = async book_id => {
-  const res = await addProduct(book_id);
+const onAddProductClick = async () => {
+  const res = await addProduct(props.book.book_id);
   if (!res) {
     message.value = "Что-то пошло не так";
     return;
   }
-  toast.add({ severity: 'info', detail: 'Добавлено в корзину', life: 3000 });
+  toast.add({ severity: 'info', detail: 'Добавлено в корзину', life: 2000, closable: false });
 };
 
-const setQuantityClick = async (book_id, newQuantity) => {
-  const res = await updateProduct(book_id, newQuantity);
+const setQuantityClick = async (newQuantity) => {
+  const res = await updateProduct(props.book.book_id, newQuantity);
   if (!res) {
     message.value = "Что-то пошло не так";
     return;
@@ -91,8 +91,8 @@ const setQuantityClick = async (book_id, newQuantity) => {
   quantity.value = newQuantity;
 }
 
-const deleteProductClick = async book_id => {
-  const res = await deleteProduct(book_id);
+const deleteProductClick = async () => {
+  const res = await deleteProduct(props.book.book_id);
   if (!res) {
     message.value = "Что-то пошло не так";
     return;
@@ -100,17 +100,17 @@ const deleteProductClick = async book_id => {
   emit("remove");
 };
 
-const addFavoriteClick = async book_id => {
-  const res = await addFavorite(book_id);
+const addFavoriteClick = async () => {
+  const res = await addFavorite(props.book.book_id);
   if (!res) {
     message.value = "Что-то пошло не так";
     return;
   }
-  toast.add({ severity: 'info', detail: 'Добавлено в избранное', life: 3000 });
+  toast.add({ severity: 'info', detail: 'Добавлено в избранное', life: 2000, closable: false });
 };
 
-const deleteFavoriteClick = async book_id => {
-  const res = await deleteFavorite(book_id);
+const deleteFavoriteClick = async () => {
+  const res = await deleteFavorite(props.book.book_id);
   if (!res) {
     message.value = "Что-то пошло не так";
     return;
