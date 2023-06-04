@@ -7,7 +7,7 @@
 
 <script setup>
 import TheBook from "@/components/TheBook.vue";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import {getOneBook} from "@/api/api";
 
@@ -15,9 +15,13 @@ const route = useRoute();
 
 const book = ref(null);
 
-onMounted(async () => {
+const loadBook = async () => {
   book.value = await getOneBook(route.params.id);
-});
+}
+
+watch(() => route.params.id, loadBook, { immediate: true });
+
+onMounted(loadBook);
 
 </script>
 

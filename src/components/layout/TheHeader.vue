@@ -5,19 +5,12 @@
       <span>Интернет-магазин книг</span>
     </div>
 
-    <div class="header-container__search-catalog">
-      <the-button to="/catalog">
-          <router-link to="/catalog" class="catalog_link">Каталог</router-link>
+    <div class="header">
+      <Button @click="router.push('/catalog')">
         <font-awesome-icon icon="book" class="icon-book"/>
-      </the-button>
-      <div class="search-form">
-        <form>
-          <input type="text" placeholder="Я ищу...">
-          <the-button>
-            <font-awesome-icon icon="search"/>
-          </the-button>
-        </form>
-      </div>
+        <span style="padding-left: 8px">Каталог</span>
+      </Button>
+      <AutoComplete v-model="query" optionLabel="description" placeholder="Я ищу..." forceSelection :suggestions="books" @complete="search" @item-select="change"/>
     </div>
 
     <div class="header-right">
@@ -49,10 +42,10 @@
 
 import { useStore } from 'vuex'
 import { useRouter, useRoute  } from "vue-router";
-import TheButton from "@/components/UI/TheButton.vue";
 import LoginDialog from '@/components/LoginDialog.vue';
 import MessageDialog from '@/components/MessageDialog.vue';
 import { ref } from 'vue'
+import { getBooks } from '@/api/api';
 
 // const menu = [
 //   {
@@ -78,6 +71,8 @@ const router = useRouter();
 const route = useRoute();
 const loginDialogVisible = ref();
 const message = ref('');
+const query = ref('');
+const books = ref([]);
 
 const onNavClick = path => {
   if (store.state.login) {
@@ -96,6 +91,15 @@ const onLoginAuth = () => {
 
 const onLoginCancel = () => {
   loginDialogVisible.value = false;
+};
+
+const search = async e => {
+  const newBooks = await getBooks(false, {query: e.query});
+  books.value = newBooks.map(book => ({...book, description: book.title + " " + book.author}));
+};
+
+const change = e => {
+  router.push(`/books/${e.value.book_id}`);
 };
 
 </script>
@@ -142,15 +146,10 @@ const onLoginCancel = () => {
   font-weight:bold;
 }
 
-.search-form{
-  margin-left:20px;
-}
-
-.search-form input{
-  height:40px;
-  border:1px solid var(--blue);
-  border-radius:5px;
-  padding:10px;
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .icon-book{
