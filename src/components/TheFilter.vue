@@ -16,39 +16,49 @@
         <span>{{ author.name }}</span>
       </div>
     </div>
-    <button @click="applyFilters" class="filters-button">Применить</button>
+    <div class="flex">
+      <Button label="Сохранить" @click="applyFilters()" size="small"/>
+    </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      minPrice: null,
-      maxPrice: null,
-      selectedAuthors: [],
-      authors: [
-        { id: 1, name: "Александр Пушкин" },
-        { id: 2, name: "Лев Толстой" },
-        { id: 3, name: "Михаил Булгаков" }
-      ]
-    };
-  },
-  methods: {
+<script setup>
 
-    applyFilters() {
-      // Применение фильтров
-      const filters = {
-        minPrice: this.minPrice,
-        maxPrice: this.maxPrice,
-        selectedAuthors: this.selectedAuthors
-      };
-      console.log("Применение фильтров:", filters);
-      // Вызываем событие для передачи фильтров в родительский компонент
-      this.$emit("apply-filters", filters);
-    }
+import { ref, onMounted } from "vue";
+import { getFilterOptions } from '../api/api';
+
+const emit = defineEmits(['apply-filters']);
+
+const minPrice = ref(null);
+const maxPrice = ref(null);
+const selectedAuthors = ref([]);
+const selectedGenres = ref([]);
+const selectedPublishments = ref([]);
+const filterOptions = ref({});
+
+onMounted(async () => {
+  const newFilterOptions = await getFilterOptions();
+  if (newFilterOptions === null) {
+    return;
   }
+  filterOptions.value = newFilterOptions;
+  minPrice.value = filterOptions.value.price.min;
+  maxPrice.value = filterOptions.value.price.max;
+});
+
+const applyFilters = () => {
+  // Применение фильтров
+  const filters = {
+    minPrice: minPrice.value,
+    maxPrice: maxPrice.value,
+    selectedAuthors: selectedAuthors.value,
+    selectedGenres: selectedGenres.value,
+    selectedPublishments: selectedPublishments.value
+  };
+  // Вызываем событие для передачи фильтров в родительский компонент
+  emit("apply-filters", filters);
 };
+
 </script>
 
 <style scoped>
@@ -112,17 +122,4 @@ export default {
   font-size: 14px;
 }
 
-.filters-button {
-  padding: 10px 20px;
-  background-color: #374785;
-  font-weight: bold;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.filters-button:hover {
-  background-color: #263b5e;
-}
 </style>

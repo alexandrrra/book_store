@@ -226,3 +226,15 @@ export const deleteFavorite = async (id) => {
     return false;
   }
 };
+
+export const getFilterOptions = async () => {
+  try {
+      const response = await axios.get(
+          `${API_URL}/filterOptions`
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
