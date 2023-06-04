@@ -21,31 +21,32 @@
     </div>
 
     <div class="header-right">
-      <router-link to="/profile" class="header-right-link">
-        <div class="header-right-item">
-          <font-awesome-icon icon="user" class="icon hover"/>
-          <span>{{ store.state.login || "Войти" }}</span>
-        </div>
-      </router-link>
-      <router-link to="/favorite" class="header-right-link">
-        <div class="header-right-item">
-          <font-awesome-icon icon="heart" class="icon hover"/>
-          <span>Избранное</span>
-        </div>
-      </router-link>
-      <router-link to="/cart" class="header-right-link">
-        <div class="header-right-item">
-          <font-awesome-icon icon="shopping-cart" class="icon hover"/>
-          <span>Корзина</span>
-        </div>
-      </router-link>
-    </div>
+        <router-link to="/profile" :class="['header-right-link', , route.path === '/profile' ? 'active' : 'normal']">
+          <div class="header-right-item">
+            <font-awesome-icon icon="user" class="icon"/>
+            <span>{{ store.state.login || "Войти" }}</span>
+          </div>
+        </router-link>
+        <router-link to="/favorite" :class="['header-right-link', , route.path === '/favorite' ? 'active' : 'normal']">
+          <div class="header-right-item">
+            <font-awesome-icon icon="heart" class="icon"/>
+            <span>Избранное</span>
+          </div>
+        </router-link>
+        <router-link to="/cart" :class="['header-right-link', , route.path === '/cart' ? 'active' : 'normal']">
+          <div class="header-right-item">
+            <font-awesome-icon icon="shopping-cart" class="icon"/>
+            <span>Корзина</span>
+          </div>
+        </router-link>
+      </div>
   </header>
 </template>
 
 <script setup>
 
 import { useStore } from 'vuex'
+import { useRoute } from "vue-router";
 import TheButton from "@/components/UI/TheButton.vue";
 
 // const menu = [
@@ -68,6 +69,7 @@ import TheButton from "@/components/UI/TheButton.vue";
 // ]
 
 const store = useStore();
+const route = useRoute();
 
 </script>
 
@@ -144,18 +146,20 @@ const store = useStore();
 
 .icon {
   padding: 8px;
-  color: #2f2e2e;
   width: 24px;
   height: 24px;
 }
 
-.icon:hover{
-  color:var(--red);
+.active {
+  color: #F76C6C;
+}
+
+.normal {
+  color: #2f2e2e;
 }
 
 .header-right-item span {
   font-size: 14px;
-  color: black;
 }
 
 </style>
