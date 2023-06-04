@@ -10,14 +10,35 @@
       </div>
     </div>
     <div class="filters-row">
+      <label class="filters-label">Я ищу...</label>
+      <div class="controls-row">
+        <InputText v-model="query" class="field" />
+        <Button icon="pi pi-times" text @click="query=''" />
+      </div>
+    </div>
+    <div class="filters-row">
       <label class="filters-label">Автор</label>
-      <div v-for="author in authors" :key="author.id" class="filters-checkbox">
-        <input class="checkbox" type="checkbox" :value="author.name" v-model="selectedAuthors" />
-        <span>{{ author.name }}</span>
+      <div class="controls-row">
+        <AutoComplete v-model="author" dropdown forceSelection :suggestions="authors" @complete="searchAuthor"  class="field"/>
+        <Button icon="pi pi-times" text @click="author=''" />
+      </div>
+    </div>
+    <div class="filters-row">
+      <label class="filters-label">Жанр</label>
+      <div class="controls-row">
+        <AutoComplete v-model="genre" optionLabel="genre_name" dropdown forceSelection :suggestions="genres" @complete="searchGenre"  class="field"/>
+        <Button icon="pi pi-times" text @click="genre=undefined"/>
+      </div>
+    </div>
+    <div class="filters-row">
+      <label class="filters-label">Издатель</label>
+      <div class="controls-row">
+        <AutoComplete v-model="publishment" optionLabel="publishment_name" dropdown forceSelection :suggestions="publishments" @complete="searchPublishment"  class="field"/>
+        <Button icon="pi pi-times" text @click="publishment=undefined"/>
       </div>
     </div>
     <div class="flex">
-      <Button label="Сохранить" @click="applyFilters()" size="small"/>
+      <Button label="Сохранить" @click="applyFilter()" size="small"/>
     </div>
   </div>
 </template>
@@ -25,38 +46,57 @@
 <script setup>
 
 import { ref, onMounted } from "vue";
-import { getFilterOptions } from '../api/api';
+import { getPriceRange, getAuthors, getGenres, getPublishments } from '../api/api';
 
-const emit = defineEmits(['apply-filters']);
+const emit = defineEmits(['apply-filter']);
+
+const query = ref('');
 
 const minPrice = ref(null);
 const maxPrice = ref(null);
-const selectedAuthors = ref([]);
-const selectedGenres = ref([]);
-const selectedPublishments = ref([]);
-const filterOptions = ref({});
+
+const author = ref('');
+const authors = ref([]);
+
+const genre = ref();
+const genres = ref([]);
+
+const publishment = ref();
+const publishments = ref([]);
 
 onMounted(async () => {
-  const newFilterOptions = await getFilterOptions();
-  if (newFilterOptions === null) {
+  const priceRange = await getPriceRange();
+  if (priceRange === null) {
     return;
   }
-  filterOptions.value = newFilterOptions;
-  minPrice.value = filterOptions.value.price.min;
-  maxPrice.value = filterOptions.value.price.max;
+  minPrice.value = priceRange[0];
+  maxPrice.value = priceRange[1];
 });
 
-const applyFilters = () => {
+const searchAuthor = async e => {
+  authors.value = await getAuthors(e.query);
+}
+
+const searchGenre = async e => {
+  genres.value = await getGenres(e.query);
+}
+
+const searchPublishment = async e => {
+  publishments.value = await getPublishments(e.query);
+}
+
+const applyFilter = () => {
   // Применение фильтров
-  const filters = {
+  const filter = {
+    query: query.value,
     minPrice: minPrice.value,
     maxPrice: maxPrice.value,
-    selectedAuthors: selectedAuthors.value,
-    selectedGenres: selectedGenres.value,
-    selectedPublishments: selectedPublishments.value
+    author: author.value,
+    genre: genre.value && genre.value.genre_id,
+    publishment: publishment.value && publishment.value.publishment_id
   };
   // Вызываем событие для передачи фильтров в родительский компонент
-  emit("apply-filters", filters);
+  emit("apply-filter", filter);
 };
 
 </script>
@@ -91,35 +131,14 @@ const applyFilters = () => {
   border-radius: 5px;
 }
 
-.filters-checkbox {
+.controls-row {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  gap: 8px;
 }
 
-.checkbox {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 5px;
-}
-
-.checkbox:checked {
-  background-color: #374785;
-  border-color: #374785;
-}
-
-.checkbox:checked::before {
-  content: '✔';
-  display: block;
-  text-align: center;
-  color: #fff;
-}
-
-.filters-checkbox span {
-  font-size: 14px;
+.field {
+  width: 90%;
 }
 
 </style>

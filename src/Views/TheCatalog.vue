@@ -1,10 +1,10 @@
 <template>
   <div class="filter-books">
     <div class="filter">
-      <the-filter @apply-filters="applyFilters"></the-filter>
+      <the-filter @apply-filter="applyFilter"></the-filter>
     </div>
     <div class="catalog">
-      <the-book v-for="book of filteredBooks" :key="book.book_id" :book="book" variant="catalog"/>
+      <the-book v-for="book of books" :key="book.book_id" :book="book" variant="catalog"/>
     </div>
   </div>
 </template>
@@ -16,28 +16,13 @@ import { onMounted, ref } from "vue";
 import { getBooks } from "@/api/api";
 
 const books = ref([]);
-const filteredBooks = ref([]);
 
 onMounted(async () => {
   books.value = await getBooks();
-  filteredBooks.value = books.value; // Инициализация списка фильтрованных книг
-  //books.value[0].image_url = ROOT_URL + '/' + books.value[0].image_url;
-  console.log(books.value);
 });
 
-const applyFilters = (filters) => {
-  // Применение фильтров
-  filteredBooks.value = books.value.filter((book) => {
-    const priceCondition =
-        (filters.minPrice === null || book.price >= filters.minPrice) &&
-        (filters.maxPrice === null || book.price <= filters.maxPrice);
-
-    const authorCondition =
-        filters.selectedAuthors.length === 0 ||
-        filters.selectedAuthors.includes(book.author); // Изменение на book.author.id
-
-    return priceCondition && authorCondition;
-  });
+const applyFilter = async (filter) => {
+  books.value = await getBooks(false, filter);
 };
 
 </script>

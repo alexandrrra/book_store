@@ -8,12 +8,12 @@ const API_URL = `${ROOT_URL}/api`;
 const patchImageUrl = url => `${ROOT_URL}/${url}`;
 
 // получить каталог книг
-export const getBooks = async (newOnly) => {
+export const getBooks = async (newOnly, filter) => {
   try {
     const response = await axios.get(
       `${API_URL}/books`,
       {
-        params: { newOnly }
+        params: { newOnly , filter}
       }
     );
     return response.data.map(
@@ -227,10 +227,55 @@ export const deleteFavorite = async (id) => {
   }
 };
 
-export const getFilterOptions = async () => {
+export const getPriceRange = async () => {
   try {
       const response = await axios.get(
-          `${API_URL}/filterOptions`
+          `${API_URL}/priceRange`
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const getAuthors = async (name) => {
+  try {
+      const response = await axios.get(
+          `${API_URL}/authors`,
+          {
+            params: {name}
+          }
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const getGenres = async (name) => {
+  try {
+      const response = await axios.get(
+          `${API_URL}/genres`,
+          {
+            params: {name}
+          }
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const getPublishments = async (name) => {
+  try {
+      const response = await axios.get(
+          `${API_URL}/publishments`,
+          {
+            params: {name}
+          }
       );
       return response.data;
   } catch (error) {

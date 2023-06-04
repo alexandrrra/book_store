@@ -54,9 +54,11 @@ import MessageDialog from '@/components/MessageDialog.vue';
 import { ref, defineProps } from 'vue';
 import { addProduct, updateProduct, deleteProduct, addFavorite, deleteFavorite } from '../api/api';
 import { useToast } from 'primevue/usetoast';
+import { useStore } from 'vuex';
 
 const emit = defineEmits(['remove']);
 const toast = useToast();
+const store = useStore();
 
 const message = ref("");
 
@@ -74,6 +76,10 @@ const props = defineProps({
 const quantity = ref(props.book.quantity);
 
 const onAddProductClick = async () => {
+  if (store.state.login === null) {
+    message.value = "Войдите в профиль";
+    return;
+  }
   const res = await addProduct(props.book.book_id);
   if (!res) {
     message.value = "Что-то пошло не так";
@@ -101,6 +107,10 @@ const deleteProductClick = async () => {
 };
 
 const addFavoriteClick = async () => {
+  if (store.state.login === null) {
+    message.value = "Войдите в профиль";
+    return;
+  }
   const res = await addFavorite(props.book.book_id);
   if (!res) {
     message.value = "Что-то пошло не так";
