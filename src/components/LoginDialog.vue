@@ -1,6 +1,6 @@
 <template>
   <MessageDialog :message="message" @close="message=''"/>
-  <Dialog :visible="store.state.login === null" modal :closable="false" :header="header[variant]">
+  <Dialog visible modal :closable="false" :header="header[variant]">
     <template v-if="variant === 'authorization'">
       <span>
         <div class="label">Логин</div>
@@ -62,7 +62,6 @@ import MessageDialog from '@/components/MessageDialog.vue';
 import { useStore } from 'vuex';
 import { inject, ref } from "vue";
 import { setToken, createUser, sendOneTimePassword } from '../api/api';
-import { useRouter } from "vue-router";
 
 const header = {
   'authorization': "Авторизация",
@@ -72,8 +71,7 @@ const header = {
 
 const store = useStore();
 const $cookies = inject('$cookies');
-const emit = defineEmits(['auth']);
-const router = useRouter();
+const emit = defineEmits(['auth', 'cancel']);
 
 const message = ref('');
 const variant = ref('authorization');
@@ -114,7 +112,9 @@ const onRecovery = async () => {
   message.value = "Одноразовый пароль отправлен на электропочту";
 };
 
-const onCancel = () => router.push("/");
+const onCancel = () => {
+  emit("cancel");
+};
 
 </script>
 

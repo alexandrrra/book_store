@@ -77,7 +77,7 @@ const quantity = ref(props.book.quantity);
 
 const onAddProductClick = async () => {
   if (store.state.login === null) {
-    message.value = "Войдите в профиль";
+    message.value = "Вход не выполнен";
     return;
   }
   const res = await addProduct(props.book.book_id);
@@ -108,7 +108,7 @@ const deleteProductClick = async () => {
 
 const addFavoriteClick = async () => {
   if (store.state.login === null) {
-    message.value = "Войдите в профиль";
+    message.value = "Вход не выполнен";
     return;
   }
   const res = await addFavorite(props.book.book_id);

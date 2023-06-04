@@ -1,50 +1,53 @@
 <template>
   <div class="container">
-    <LoginDialog @auth="loadProfile(true)" />
     <MessageDialog :message="message" @close="message=''"/>
-    <div class="profile-navigation">
-      <div class="profile-navigation-container">
-        <div :class="['navigation-item', variant==='view' ? 'active' : '']" @click="setVariant('view')">
-          <font-awesome-icon icon="user" class="icon" />
-          <span>Профиль</span>
-        </div>
-        <div :class="['navigation-item', variant==='edit' ? 'active' : '']" @click="setVariant('edit')">
-          <font-awesome-icon icon="pen" class="icon" />
-          <span>Редактировать</span>
-        </div>
-        <div :class="['navigation-item', variant==='orders' ? 'active' : '']" @click="setVariant('orders')">
-          <font-awesome-icon icon="book" class="icon" />
-          <span>Заказы</span>
-        </div>
-        <div class="navigation-item exit" @click="onExitClick()">
-          <font-awesome-icon icon="person-walking-arrow-right" class="icon" />
-          <span>Выйти</span>
+    <div v-if="store.state.login === null" class="no-login">
+      <h1>Вход не выполнен</h1>
+    </div>
+    <template v-else>
+      <div class="profile-navigation">
+        <div class="profile-navigation-container">
+          <div :class="['navigation-item', variant==='view' ? 'active' : '']" @click="setVariant('view')">
+            <font-awesome-icon icon="user" class="icon" />
+            <span>Профиль</span>
+          </div>
+          <div :class="['navigation-item', variant==='edit' ? 'active' : '']" @click="setVariant('edit')">
+            <font-awesome-icon icon="pen" class="icon" />
+            <span>Редактировать</span>
+          </div>
+          <div :class="['navigation-item', variant==='orders' ? 'active' : '']" @click="setVariant('orders')">
+            <font-awesome-icon icon="book" class="icon" />
+            <span>Заказы</span>
+          </div>
+          <div class="navigation-item exit" @click="onExitClick()">
+            <font-awesome-icon icon="person-walking-arrow-right" class="icon" />
+            <span>Выйти</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="info">
-      <template v-if="variant === 'view' || variant === 'edit'">
-        <div class="info-container">
-          <span v-for="field in profileFields" :key="field.name">
-            <div class="label">{{ field.label }}</div>
-            <InputText v-model="currentProfile[field.name]" class="p-inputtext-sm" :disabled="variant === 'view'" />
-          </span>
-          <template v-if="variant === 'edit'">
-            <div class="label">Пароль</div>
-            <Password v-model="password" :disabled="variant === 'view'" class="p-inputtext-sm" />
-            <div class="flex">
-              <Button label="Сохранить" @click="onSaveClick()" :disabled="isEqual(profile, currentProfile) && password.length == 0" />
-            </div>
-          </template>
-        </div>
-      </template>
-    </div>
+      <div class="info">
+        <template v-if="variant === 'view' || variant === 'edit'">
+          <div class="info-container">
+            <span v-for="field in profileFields" :key="field.name">
+              <div class="label">{{ field.label }}</div>
+              <InputText v-model="currentProfile[field.name]" class="p-inputtext-sm" :disabled="variant === 'view'" />
+            </span>
+            <template v-if="variant === 'edit'">
+              <div class="label">Пароль</div>
+              <Password v-model="password" :disabled="variant === 'view'" class="p-inputtext-sm" />
+              <div class="flex">
+                <Button label="Сохранить" @click="onSaveClick()" :disabled="isEqual(profile, currentProfile) && password.length == 0" />
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+    </template>
   </div>
 </template>
 
 <script setup>
 
-import LoginDialog from '@/components/LoginDialog.vue';
 import MessageDialog from '@/components/MessageDialog.vue';
 import { useStore } from 'vuex';
 import { inject, ref, onMounted } from 'vue'
@@ -187,4 +190,14 @@ const onExitClick = async () => {
 .flex {
   display: flex;
 }
+
+.no-login{
+  width: 100%;
+  padding: 0 80px;
+  margin: 50px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 </style>

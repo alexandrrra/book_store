@@ -1,24 +1,27 @@
 <template>
   <div class="container">
-    <LoginDialog @auth="loadProducts()"/>
-    <MessageDialog :message="message" @close="message=''"/>
-    <div v-if="products.length > 0" class="books">
-      <the-book v-for="book of products" :key="book.book_id" :book="book" variant="cart" @remove="onRemove(book.book_id)"/>
-    </div>
-    <div v-else class="books">
-      <h1>Корзина пуста</h1>
+    <div class="books">
+      <div v-if="store.state.login === null">
+        <h1>Вход не выполнен</h1>
+      </div>
+      <template v-else>
+        <template v-if="products.length > 0">
+          <the-book v-for="book of products" :key="book.book_id" :book="book" variant="cart" @remove="onRemove(book.book_id)"/>
+        </template>
+        <h1 v-else>Корзина пуста</h1>
+      </template>
     </div>
   </div>
 </template>
 
 <script setup>
 
-import LoginDialog from '@/components/LoginDialog.vue';
 import TheBook from "@/components/TheBook.vue";
 import { ref, onMounted } from 'vue'
 import { getProducts } from '../api/api';
+import { useStore } from 'vuex';
 
-const message = ref("");
+const store = useStore();
 const products = ref([]);
 
 const loadProducts = async () => {

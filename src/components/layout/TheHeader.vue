@@ -21,24 +21,26 @@
     </div>
 
     <div class="header-right">
-        <router-link to="/profile" :class="['header-right-link', , route.path === '/profile' ? 'active' : 'normal']">
+        <MessageDialog :message="message" @close="message=''"/>
+        <LoginDialog v-if="loginDialogVisible" @auth="onLoginAuth()" @cancel="onLoginCancel()" />
+        <div @click="onNavClick('/profile')" :class="['pointer', route.path === '/profile' ? 'active' : 'normal']">
           <div class="header-right-item">
             <font-awesome-icon icon="user" class="icon"/>
             <span>{{ store.state.login || "Войти" }}</span>
           </div>
-        </router-link>
-        <router-link to="/favorite" :class="['header-right-link', , route.path === '/favorite' ? 'active' : 'normal']">
+        </div>
+        <div @click="onNavClick('/favorite')" :class="['pointer', route.path === '/favorite' ? 'active' : 'normal']">
           <div class="header-right-item">
             <font-awesome-icon icon="heart" class="icon"/>
             <span>Избранное</span>
           </div>
-        </router-link>
-        <router-link to="/cart" :class="['header-right-link', , route.path === '/cart' ? 'active' : 'normal']">
+        </div>
+        <div @click="onNavClick('/cart')" :class="['pointer', route.path === '/cart' ? 'active' : 'normal']">
           <div class="header-right-item">
             <font-awesome-icon icon="shopping-cart" class="icon"/>
             <span>Корзина</span>
           </div>
-        </router-link>
+        </div>
       </div>
   </header>
 </template>
@@ -46,8 +48,11 @@
 <script setup>
 
 import { useStore } from 'vuex'
-import { useRoute } from "vue-router";
+import { useRouter, useRoute  } from "vue-router";
 import TheButton from "@/components/UI/TheButton.vue";
+import LoginDialog from '@/components/LoginDialog.vue';
+import MessageDialog from '@/components/MessageDialog.vue';
+import { ref } from 'vue'
 
 // const menu = [
 //   {
@@ -69,7 +74,29 @@ import TheButton from "@/components/UI/TheButton.vue";
 // ]
 
 const store = useStore();
+const router = useRouter();
 const route = useRoute();
+const loginDialogVisible = ref();
+const message = ref('');
+
+const onNavClick = path => {
+  if (store.state.login) {
+    router.push(path);
+  } else if (path === "/profile") {
+    loginDialogVisible.value = true;
+  } else {
+    message.value = "Вход не выполнен";
+  }
+};
+
+const onLoginAuth = () => {
+  loginDialogVisible.value = false;
+  router.push("/");
+};
+
+const onLoginCancel = () => {
+  loginDialogVisible.value = false;
+};
 
 </script>
 
@@ -160,6 +187,10 @@ const route = useRoute();
 
 .header-right-item span {
   font-size: 14px;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 </style>

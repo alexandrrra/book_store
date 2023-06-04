@@ -1,24 +1,27 @@
 <template>
   <div class="container">
-    <LoginDialog @auth="loadFavorite()"/>
-    <MessageDialog :message="message" @close="message=''"/>
-    <div v-if="favorites.length > 0" class="books">
-      <the-book v-for="book of favorites" :key="book.book_id" :book="book" variant="favorite" @remove="onRemove(book.book_id)"/>
-    </div>
-    <div v-else class="books">
-      <h1>Спиок избранного пуст</h1>
+    <div class="books">
+      <div v-if="store.state.login === null">
+        <h1>Вход не выполнен</h1>
+      </div>
+      <template v-else>
+        <template v-if="favorites.length > 0">
+          <the-book v-for="book of favorites" :key="book.book_id" :book="book" variant="favorite" @remove="onRemove(book.book_id)"/>
+        </template>
+        <h1 v-else>Спиок избранного пуст</h1>
+      </template>
     </div>
   </div>
 </template>
 
 <script setup>
 
-import LoginDialog from '@/components/LoginDialog.vue';
 import TheBook from "@/components/TheBook.vue";
 import { ref, onMounted } from 'vue'
 import { getFavorites } from '../api/api';
+import { useStore } from 'vuex';
 
-const message = ref("");
+const store = useStore();
 const favorites = ref([]);
 
 const loadFavorites = async () => {
