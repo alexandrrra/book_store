@@ -10,7 +10,7 @@
         <font-awesome-icon icon="book" class="icon-book"/>
         <span style="padding-left: 8px">Каталог</span>
       </Button>
-      <AutoComplete v-model="query" optionLabel="description" placeholder="Я ищу..." forceSelection :suggestions="books" @complete="search" @item-select="change"/>
+      <AutoComplete v-model="query" optionLabel="description" placeholder="Я ищу..." :suggestions="books" @complete="search" @item-select="change"/>
     </div>
 
     <div class="header-right">
@@ -95,11 +95,12 @@ const onLoginCancel = () => {
 
 const search = async e => {
   const newBooks = await getBooks(false, {query: e.query});
-  books.value = newBooks.map(book => ({...book, description: book.title + " " + book.author}));
+  books.value = newBooks.map(book => ({...book, description: book.title + " " + book.author, query: e.query}));
 };
 
 const change = e => {
   router.push(`/books/${e.value.book_id}`);
+  query.value = e.value.query;
 };
 
 </script>
