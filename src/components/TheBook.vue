@@ -103,28 +103,31 @@ const onAddProductClick = async () => {
     return;
   }
   const res = await addProduct(props.book.book_id);
-  if (!res) {
+  if (res === null) {
     message.value = "Что-то пошло не так";
     return;
   }
+  store.commit("setProductsCount", res.products_count);
   toast.add({ severity: 'info', detail: 'Добавлено в корзину', life: 2000, closable: false });
 };
 
 const setQuantityClick = async (newQuantity) => {
   const res = await updateProduct(props.book.book_id, newQuantity);
-  if (!res) {
+  if (res === null) {
     message.value = "Что-то пошло не так";
     return;
   }
+  store.commit("setProductsCount", res.products_count);
   quantity.value = newQuantity;
 }
 
 const deleteProductClick = async () => {
   const res = await deleteProduct(props.book.book_id);
-  if (!res) {
+  if (res === null) {
     message.value = "Что-то пошло не так";
     return;
   }
+  store.commit("setProductsCount", res.products_count);
   emit("remove");
 };
 

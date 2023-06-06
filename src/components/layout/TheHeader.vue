@@ -32,6 +32,7 @@
           <div class="header-right-item">
             <font-awesome-icon icon="shopping-cart" class="icon"/>
             <span>Корзина</span>
+            <div v-if="store.state.productsCount > 0" class="badge"></div>
           </div>
         </div>
       </div>
@@ -169,6 +170,7 @@ const change = e => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .icon {
@@ -191,6 +193,16 @@ const change = e => {
 
 .pointer {
   cursor: pointer;
+}
+
+.badge {
+  background-color: #F76C6C;
+  border-radius: 4px;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
 }
 
 </style>

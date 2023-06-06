@@ -30,11 +30,13 @@ onMounted(async () => {
     $cookies.remove("user_id");
     $cookies.remove("token");
     store.commit("setLogin", null);
+    store.commit("setProductsCount", 0);
     message.value = "";
     return;
   }
   $cookies.set("token", res.token);
   store.commit("setLogin", res.profile.login);
+  store.commit("setProductsCount", res.products_count);
   message.value = "";
 });
 

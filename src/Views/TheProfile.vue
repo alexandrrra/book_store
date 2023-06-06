@@ -130,6 +130,7 @@ const onExitClick = async () => {
   $cookies.remove("user_id");
   $cookies.remove("token");
   store.commit("setLogin", null);
+  store.commit("setProductsCount", 0);
   router.push("/");
 };
 

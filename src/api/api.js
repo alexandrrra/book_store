@@ -149,39 +149,39 @@ export const getProducts = async () => {
 
 export const addProduct = async (id) => {
   try {
-    await axios.post(
+    const response = await axios.post(
       `${API_URL}/products`,
       {id}
     );
-    return true;
+    return response.data;
   } catch (error) {
     console.error(error);
-    return false;
+    return null;
   }
 };
 
 export const updateProduct = async (id, quantity) => {
   try {
-    await axios.put(
+    const response = await axios.put(
       `${API_URL}/products/${id}`,
       {quantity}
     );
-    return true;
+    return response.data;
   } catch (error) {
     console.error(error);
-    return false;
+    return null;
   }
 };
 
 export const deleteProduct = async (id) => {
   try {
-    await axios.delete(
+    const response = await axios.delete(
       `${API_URL}/products/${id}`
     );
-    return true;
+    return response.data;
   } catch (error) {
     console.error(error);
-    return false;
+    return null;
   }
 };
 

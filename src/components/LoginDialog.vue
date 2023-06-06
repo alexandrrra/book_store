@@ -88,6 +88,7 @@ const onLogin = async () => {
   $cookies.set("user_id", res.user_id);
   $cookies.set("token", res.token);
   store.commit("setLogin", res.profile.login);
+  store.commit("setProductsCount", res.products_count);
   emit("auth");
 };
 
@@ -100,6 +101,7 @@ const onRegister = async () => {
   $cookies.set("user_id", res.user_id);
   $cookies.set("token", res.token);
   store.commit("setLogin", res.profile.login);
+  store.commit("setProductsCount", 0);
   emit("auth");
 };
 
