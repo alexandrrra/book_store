@@ -27,6 +27,7 @@ import Password from 'primevue/password';
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import AutoComplete from 'primevue/autocomplete';
+import Rating from 'primevue/rating';
 
 library.add(
   faUser, faHeart, faShoppingCart, faSearch, faIdCard, faSignOut,
@@ -51,5 +52,6 @@ app.component('Password', Password);
 app.component('Dialog', Dialog);
 app.component('Toast', Toast);
 app.component('AutoComplete', AutoComplete);
+app.component('Rating', Rating);
 
 app.mount('#app');

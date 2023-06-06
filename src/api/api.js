@@ -283,3 +283,41 @@ export const getPublishments = async (name) => {
       return null;
   }
 };
+
+export const createFeedback = async (book_id, rating, body) => {
+  try {
+      const response = await axios.post(
+          `${API_URL}/books/${book_id}/feedback`,
+          { rating, body }
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const updateFeedback = async (book_id, rating, body) => {
+  try {
+      const response = await axios.put(
+          `${API_URL}/books/${book_id}/feedback`,
+          { rating, body }
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+export const deleteFeedback = async (book_id) => {
+  try {
+      const response = await axios.delete(
+          `${API_URL}/books/${book_id}/feedback`
+      );
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
