@@ -32,7 +32,7 @@
           <div class="header-right-item">
             <font-awesome-icon icon="shopping-cart" class="icon"/>
             <span>Корзина</span>
-            <div v-if="store.state.productsCount > 0" class="badge"></div>
+            <div v-if="store.state.productsCount > 0" class="badge">{{ store.state.productsCount }}</div>
           </div>
         </div>
       </div>
@@ -197,12 +197,15 @@ const change = e => {
 
 .badge {
   background-color: #F76C6C;
-  border-radius: 4px;
-  width: 8px;
-  height: 8px;
+  border-radius: 8px;
+  width: 16px;
+  height: 16px;
   position: absolute;
-  right: 4px;
-  top: 4px;
+  right: 0;
+  top: 0;
+  font-size: 12px;
+  text-align: center;
+  color: white;
 }
 
 </style>
