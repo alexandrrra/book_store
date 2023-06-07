@@ -7,15 +7,15 @@
     <template v-else>
       <div class="profile-navigation">
         <div class="profile-navigation-container">
-          <div :class="['navigation-item', variant==='view' ? 'active' : '']" @click="setVariant('view')">
+          <div :class="['navigation-item', route.params.variant==='view' ? 'active' : '']" @click="setVariant('view')">
             <font-awesome-icon icon="user" class="icon" />
             <span>Профиль</span>
           </div>
-          <div :class="['navigation-item', variant==='edit' ? 'active' : '']" @click="setVariant('edit')">
+          <div :class="['navigation-item', route.params.variant==='edit' ? 'active' : '']" @click="setVariant('edit')">
             <font-awesome-icon icon="pen" class="icon" />
             <span>Редактировать</span>
           </div>
-          <div :class="['navigation-item', variant==='orders' ? 'active' : '']" @click="setVariant('orders')">
+          <div :class="['navigation-item', route.params.variant==='orders' ? 'active' : '']" @click="setVariant('orders')">
             <font-awesome-icon icon="book" class="icon" />
             <span>Заказы</span>
           </div>
@@ -26,21 +26,33 @@
         </div>
       </div>
       <div class="info">
-        <template v-if="variant === 'view' || variant === 'edit'">
-          <div class="info-container">
+        <div class="info-container">
+          <template v-if="route.params.variant === 'view' || route.params.variant === 'edit'">
             <span v-for="field in profileFields" :key="field.name">
               <div class="label">{{ field.label }}</div>
-              <InputText v-model="currentProfile[field.name]" class="p-inputtext-sm" :disabled="variant === 'view'" />
+              <InputText v-model="currentProfile[field.name]" class="p-inputtext-sm" :disabled="route.params.variant === 'view'" />
             </span>
-            <template v-if="variant === 'edit'">
+            <template v-if="route.params.variant === 'edit'">
               <div class="label">Пароль</div>
-              <Password v-model="password" :disabled="variant === 'view'" class="p-inputtext-sm" />
+              <Password v-model="password" :disabled="route.params.variant === 'view'" class="p-inputtext-sm" />
               <div class="flex">
                 <Button label="Сохранить" @click="onSaveClick()" :disabled="isEqual(profile, currentProfile) && password.length == 0" />
               </div>
             </template>
-          </div>
-        </template>
+          </template>
+          <template v-else-if="route.params.variant === 'orders'">
+            <div class="order" v-for="order of orders" :key="order.order_id" @click="router.push(`/orders/${order.order_id}`)">
+              <div class="order-date">
+                {{ new Date(order.order_date).toLocaleDateString() }}
+              </div>
+              <div class="order-total">
+                {{ order.total }} ₽
+              </div>
+              <i v-if="order.pending" class="pi pi-hourglass wait" />
+              <i v-else class="pi pi-check-circle success" />
+            </div>
+          </template>
+        </div>
       </div>
     </template>
   </div>
@@ -51,8 +63,8 @@
 import MessageDialog from '@/components/MessageDialog.vue';
 import { useStore } from 'vuex';
 import { inject, ref, onMounted } from 'vue'
-import { getProfile, updateProfile, deleteToken } from '../api/api';
-import { useRouter } from "vue-router";
+import { getProfile, updateProfile, deleteToken, getOrders } from '../api/api';
+import { useRouter, useRoute } from "vue-router";
 import { isEqual } from "lodash";
 
 const profileFields = [
@@ -85,12 +97,13 @@ const profileFields = [
 const store = useStore()
 const $cookies = inject('$cookies');
 const router = useRouter();
+const route = useRoute();
 
 const message = ref("");
-const variant = ref("view");
 const profile = ref({});
 const currentProfile = ref({});
 const password = ref("");
+const orders = ref([]);
 
 const loadProfile = async showError => {
   const newProfile = await getProfile();
@@ -104,14 +117,26 @@ const loadProfile = async showError => {
   currentProfile.value = { ...newProfile };
 };
 
-onMounted(loadProfile);
+const loadOrders = async () => {
+  const newOrders = await getOrders();
+  if (newOrders === null) {
+    message.value = "Что-то пошло не так";
+    return;
+  }
+  orders.value = newOrders;
+};
+
+onMounted(route.params.variant === "orders" ? loadOrders : loadProfile);
 
 const setVariant = newVariant => {
-  if (variant.value === "edit") {
+  if (route.params.variant === "edit") {
     currentProfile.value = { ...profile.value };
     password.value = "";
   }
-  variant.value = newVariant;
+  if (newVariant === "orders") {
+    loadOrders();
+  }
+  router.push(`/profile/${newVariant}`);
 };
 
 const onSaveClick = async () => {
@@ -176,6 +201,7 @@ const onExitClick = async () => {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding-right: 80px;
 }
 
 .label {
@@ -199,6 +225,33 @@ const onExitClick = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.order {
+  display: flex;
+  background-color:var(--bluegray-100);
+  border-radius: 8px;
+  padding: 8px;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.order-date {
+  width: 100px;
+}
+
+.order-total {
+  font-weight: bold;
+  width: 100px;
+}
+
+.success {
+  color: var(--green-500);
+}
+
+.wait {
+  color: var(--red-500);
 }
 
 </style>

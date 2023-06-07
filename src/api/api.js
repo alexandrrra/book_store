@@ -321,3 +321,45 @@ export const deleteFeedback = async (book_id) => {
       return null;
   }
 };
+
+export const createOrder = async (address) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/orders`,
+      {address}
+    );
+    return response.data.url;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getOrders = async () => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/orders`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getOneOrder = async (id) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/orders/${id}`
+    );
+    return response.data.map(
+      book => ({
+        ...book,
+        image_url: patchImageUrl(book.image_url)
+      })
+    );
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

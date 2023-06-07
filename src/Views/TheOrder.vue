@@ -6,14 +6,12 @@
       </div>
       <template v-else>
         <template v-if="products.length > 0">
-          <the-book v-for="book of products" :key="book.book_id" :book="book" variant="cart" @remove="onRemove(book.book_id)" @change="onChange(book.book_id, $event)"/>
+          <the-book v-for="book of products" :key="book.book_id" :book="book" variant="order"/>
         </template>
-        <h1 v-else>Корзина пуста</h1>
       </template>
     </div>
     <div v-if="products.length > 0" class="footer">
       <div class="total">Общая стоимость: {{ total }} ₽</div>
-      <Button label="Оформить заказ" @click="router.push(`/orders`)" severity="success" />
     </div>
   </div>
 </template>
@@ -22,12 +20,12 @@
 
 import TheBook from "@/components/TheBook.vue";
 import { ref, onMounted } from 'vue'
-import { getProducts } from '../api/api';
+import { getOneOrder } from '../api/api';
 import { useStore } from 'vuex';
-import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 const store = useStore();
-const router = useRouter();
+const route = useRoute();
 
 const products = ref([]);
 const total = ref(0);
@@ -41,7 +39,7 @@ const updateTotal = newProducts => {
 }
 
 const loadProducts = async () => {
-  const newProducts = await getProducts();
+  const newProducts = await getOneOrder(route.params.id);
   if (newProducts === null) {
       return;
   }
@@ -50,18 +48,6 @@ const loadProducts = async () => {
 };
 
 onMounted(loadProducts);
-
-const onRemove = id => {
-  const newProducts = products.value.filter(x => x.book_id !== id);
-  products.value = newProducts;
-  updateTotal(newProducts);
-};
-
-const onChange = (book_id, delta) => {
-  const newProducts = products.value.map(product => product.book_id === book_id ? {...product, quantity: product.quantity + delta} : product);
-  products.value = newProducts;
-  updateTotal(newProducts);
-};
 
 </script>
 

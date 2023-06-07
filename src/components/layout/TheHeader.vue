@@ -16,7 +16,7 @@
     <div class="header-right">
         <MessageDialog :message="message" @close="message=''"/>
         <LoginDialog v-if="loginDialogVisible" @auth="onLoginAuth()" @cancel="onLoginCancel()" />
-        <div @click="onNavClick('/profile')" :class="['pointer', route.path === '/profile' ? 'active' : 'normal']">
+        <div @click="onNavClick('/profile/view')" :class="['pointer', route.name === 'Profile' ? 'active' : 'normal']">
           <div class="header-right-item">
             <font-awesome-icon icon="user" class="icon"/>
             <span>{{ store.state.login || "Войти" }}</span>
@@ -78,7 +78,7 @@ const books = ref([]);
 const onNavClick = path => {
   if (store.state.login) {
     router.push(path);
-  } else if (path === "/profile") {
+  } else if (path === "/profile/view") {
     loginDialogVisible.value = true;
   } else {
     message.value = "Вход не выполнен";

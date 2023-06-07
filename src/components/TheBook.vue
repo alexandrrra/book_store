@@ -8,7 +8,7 @@
     <router-link :to="`/books/${book.book_id}`" class="book-name">{{book.title}}</router-link>
     <span class="book-author">{{book.author}}</span>
     <span class="book-price">{{book.price}} ₽</span>
-    <div class="controls">
+    <div class="controls" v-if="variant !== 'order'">
       <template v-if="variant === 'favorite'">
         <div class="controls-row">
           <Button label="Купить" text @click="onAddProductClick()"/>
@@ -74,7 +74,7 @@ import { addProduct, updateProduct, deleteProduct, addFavorite, deleteFavorite, 
 import { useToast } from 'primevue/usetoast';
 import { useStore } from 'vuex';
 
-const emit = defineEmits(['remove']);
+const emit = defineEmits(['remove', 'change']);
 const toast = useToast();
 const store = useStore();
 
@@ -118,6 +118,7 @@ const setQuantityClick = async (newQuantity) => {
     return;
   }
   store.commit("setProductsCount", res.products_count);
+  emit('change', newQuantity - quantity.value);
   quantity.value = newQuantity;
 }
 
