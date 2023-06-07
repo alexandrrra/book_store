@@ -352,12 +352,15 @@ export const getOneOrder = async (id) => {
     const response = await axios.get(
       `${API_URL}/orders/${id}`
     );
-    return response.data.map(
-      book => ({
-        ...book,
-        image_url: patchImageUrl(book.image_url)
-      })
-    );
+    return {
+      ...response.data,
+      products: response.data.products.map(
+        product => ({
+          ...product,
+          image_url: patchImageUrl(product.image_url)
+        })
+      )
+    };
   } catch (error) {
     console.error(error);
     return null;
