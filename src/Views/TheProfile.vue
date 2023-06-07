@@ -48,8 +48,20 @@
               <div class="order-total">
                 {{ order.total }} ₽
               </div>
-              <i v-if="order.pending" class="pi pi-hourglass wait" />
-              <i v-else class="pi pi-check-circle success" />
+              <template v-if="order.pending">
+                <template v-if="order.payment_id === ''">
+                  <i class="pi pi-times error" />Завис
+                </template>
+                <template v-else>
+                  <i class="pi pi-hourglass wait" />Ожидаем платеж
+                </template>
+              </template>
+              <template v-else-if="order.canceled">
+                <i class="pi pi-times error" />Отменен
+              </template>
+              <template v-else>
+                <i class="pi pi-check-circle success" />Оплачен
+              </template>
             </div>
           </template>
         </div>
@@ -250,8 +262,12 @@ const onExitClick = async () => {
   color: var(--green-500);
 }
 
-.wait {
+.error {
   color: var(--red-500);
+}
+
+.wait {
+  color: var(--gray-500);
 }
 
 </style>
