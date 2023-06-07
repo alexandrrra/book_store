@@ -42,6 +42,7 @@
           </template>
           <template v-else-if="route.params.variant === 'orders'">
             <div class="order" v-for="order of orders" :key="order.order_id" @click="router.push(`/orders/${order.order_id}`)">
+              {{ order.order_id }}
               <div class="order-date">
                 {{ new Date(order.order_date).toLocaleDateString() }}
               </div>
@@ -159,6 +160,7 @@ const onSaveClick = async () => {
   }
   profile.value = { ...newProfile, password: "" };
   currentProfile.value = { ...newProfile, password: "" };
+  store.commit("setLogin", newProfile.login)
   message.value = "Сохранено";
 };
 
