@@ -28,6 +28,7 @@ import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import AutoComplete from 'primevue/autocomplete';
 import Rating from 'primevue/rating';
+import Carousel from 'primevue/carousel';
 
 library.add(
   faUser, faHeart, faShoppingCart, faSearch, faIdCard, faSignOut,
@@ -53,5 +54,6 @@ app.component('Dialog', Dialog);
 app.component('Toast', Toast);
 app.component('AutoComplete', AutoComplete);
 app.component('Rating', Rating);
+app.component('Carousel', Carousel);
 
 app.mount('#app');

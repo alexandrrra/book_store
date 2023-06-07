@@ -366,3 +366,20 @@ export const getOneOrder = async (id) => {
     return null;
   }
 };
+
+export const getBestsellers = async () => {
+  try {
+      const response = await axios.get(
+          `${API_URL}/bestsellers`
+      );
+      return response.data.map(
+        book => ({
+          ...book,
+          image_url: patchImageUrl(book.image_url)
+        })
+      );
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};

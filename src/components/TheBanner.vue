@@ -1,71 +1,51 @@
 <template>
   <div class="banner">
-    <div class="books-slider">
-      <swiper
-          :breakpoints="{
-        '0': {
-          slidesPerView: 1,
-        },
-        '768': {
-          slidesPerView: 2,
-        },
-        '1024': {
-          slidesPerView: 3,
-        },
-      }"
-          :modules="books"
-          class="mySwiper"
-          :loop="true"
-          :centeredSlides="true"
-          :autoplay="{delay:1000, disableOnInteraction:false}"
-      >
-<!--        <swiper-slide><img src="@/assets/img/book1.jpg" alt=""></swiper-slide>-->
-<!--        <swiper-slide><img src="@/assets/img/book1.jpg" alt=""></swiper-slide>-->
-<!--        <swiper-slide><img src="@/assets/img/book1.jpg" alt=""></swiper-slide>-->
-      </swiper>
-    </div>
     <div class="banner-shelf">
-
-<!--        <h2 class="banner-info-title">Книжная удача, только сегодня, только сейчас</h2>-->
-<!--        <span class="banner-info-description">Книжные новинки 2023 года</span>-->
+      <Carousel :value="books" :numVisible="3" :numScroll="1" :showNavigators="false" :showIndicators="false" circular :autoplayInterval="3000">
+          <template #item="slotProps">
+              <img :src="slotProps.data.image_url" :alt="slotProps.data.title" @click="router.push(`/books/${slotProps.data.book_id}`)" class="image"/>
+          </template>
+      </Carousel>
       <img src="@/assets/img/shelf.png" alt="">
     </div>
   </div>
 </template>
 
 <script setup>
-  import TheButton from '@/components/UI/TheButton.vue';
-  import TheBook from "@/components/TheBook.vue";
-  import { Swiper, SwiperSlide } from 'swiper/vue';
+  import {ref, onMounted} from "vue";
+  import { getBestsellers } from '../api/api';
+  import { useRouter } from "vue-router";
 
-  // Import Swiper styles
-  import 'swiper/css';
-
-  import 'swiper/css/pagination';
-  import {ref} from "vue";
+  const router = useRouter();
 
   const books = ref([]);
+
+  onMounted(async () => {
+    const newBooks = await getBestsellers();
+    if (newBooks === null) {
+        return;
+    }
+    books.value = newBooks;
+  });
 </script>
 
 <style scoped>
 .banner{
   background-image: url("@/assets/img/background.jpg");
   position: relative;
-  height: 700px;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding-right: 80px;
 }
-
-.swiper-slide img {
-  width: 60%;
-}
-
 .banner-shelf{
   width:55%;
-  margin-top: 400px;
+  margin-top: 250px;
+}
+
+.image {
+  padding: 0 4px;
 }
 
 </style>

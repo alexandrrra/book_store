@@ -1,14 +1,20 @@
 <template>
   <div class="new-books">
-    <the-book v-for="book of books" :key="book.book_id" :book="book" variant="new"/>
+    <Carousel :value="books" :numVisible="5" :numScroll="1" circular >
+        <template #item="slotProps">
+            <img :src="slotProps.data.image_url" :alt="slotProps.data.title" @click="router.push(`/books/${slotProps.data.book_id}`)" class="image"/>
+        </template>
+    </Carousel>
   </div>
 </template>
 
 <script setup>
 
 import {ref, onMounted} from 'vue'
-import TheBook from "@/components/TheBook.vue";
 import { getBooks } from '../api/api';
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const books = ref([])
 
@@ -28,4 +34,9 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
 }
+
+.image {
+  padding: 0 4px;
+}
+
 </style>
