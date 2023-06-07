@@ -5,10 +5,14 @@
       <h1>Вход не выполнен</h1>
     </div>
     <template v-else>
-      Укажите адрес и после оплаты мы отправим ваш заказ почтой
+      Укажите адрес и получателя и после оплаты мы отправим ваш заказ почтой
       <span>
         <div class="label">Адрес</div>
         <InputText v-model="address" class="p-inputtext-sm field" />
+      </span>
+      <span>
+        <div class="label">Получатель</div>
+        <InputText v-model="name" class="p-inputtext-sm field" />
       </span>
       <Button label="Оплатить" @click="onBuy()" severity="success" class="pay" />
     </template>
@@ -26,9 +30,10 @@ const store = useStore();
 
 const message = ref("");
 const address = ref("");
+const name = ref(store.state.name);
 
 const onBuy = async () => {
-  const res = await createOrder(address.value);
+  const res = await createOrder(address.value, name.value);
   if (res === null) {
     message.value = "Что-то пошло не так";
     return;

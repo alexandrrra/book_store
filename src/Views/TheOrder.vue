@@ -13,6 +13,7 @@
     <div v-if="products.length > 0" class="footer">
       <div class="total">Общая стоимость: {{ total }} ₽</div>
       <div>Адрес: {{ address }}</div>
+      <div>Получатель: {{ name }}</div>
     </div>
   </div>
 </template>
@@ -31,6 +32,7 @@ const route = useRoute();
 const products = ref([]);
 const total = ref(0);
 const address = ref('');
+const name = ref('');
 
 const loadProducts = async () => {
   const res = await getOneOrder(route.params.id);
@@ -40,6 +42,7 @@ const loadProducts = async () => {
   products.value = res.products;
   total.value = res.total;
   address.value = res.address;
+  name.value = res.name;
 };
 
 onMounted(loadProducts);

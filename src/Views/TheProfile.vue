@@ -161,6 +161,7 @@ const onSaveClick = async () => {
   profile.value = { ...newProfile, password: "" };
   currentProfile.value = { ...newProfile, password: "" };
   store.commit("setLogin", newProfile.login)
+  store.commit("setName", [newProfile.first_name, newProfile.last_name, newProfile.middle_name].join(" "))
   message.value = "Сохранено";
 };
 
@@ -169,6 +170,7 @@ const onExitClick = async () => {
   $cookies.remove("user_id");
   $cookies.remove("token");
   store.commit("setLogin", null);
+  store.commit("setName", "")
   store.commit("setProductsCount", 0);
   router.push("/");
 };

@@ -322,11 +322,11 @@ export const deleteFeedback = async (book_id) => {
   }
 };
 
-export const createOrder = async (address) => {
+export const createOrder = async (address, name) => {
   try {
     const response = await axios.post(
       `${API_URL}/orders`,
-      {address}
+      {address, name}
     );
     return response.data.url;
   } catch (error) {
