@@ -148,6 +148,8 @@ const setVariant = newVariant => {
   }
   if (newVariant === "orders") {
     loadOrders();
+  } else if (newVariant === "view" || newVariant === "edit") {
+    loadProfile();
   }
   router.push(`/profile/${newVariant}`);
 };
