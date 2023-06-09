@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="books">
-      <div v-if="store.state.login === null">
+      <div v-if="store.state.profile === null">
         <h1>Вход не выполнен</h1>
       </div>
       <template v-else>

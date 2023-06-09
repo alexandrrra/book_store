@@ -1,7 +1,7 @@
 <template>
   <MessageDialog :message="message" @close="message=''"/>
   <div class="container">
-    <div v-if="store.state.login === null" class="warning">
+    <div v-if="store.state.profile === null" class="warning">
       <h1>Вход не выполнен</h1>
     </div>
     <template v-else>
@@ -30,7 +30,7 @@ const store = useStore();
 
 const message = ref("");
 const address = ref("");
-const name = ref(store.state.name);
+const name = ref(store.state.profile.full_name);
 
 const onBuy = async () => {
   const res = await createOrder(address.value, name.value);

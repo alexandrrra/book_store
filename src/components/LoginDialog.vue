@@ -87,8 +87,7 @@ const onLogin = async () => {
   }
   $cookies.set("user_id", res.user_id);
   $cookies.set("token", res.token);
-  store.commit("setLogin", res.profile.login);
-  store.commit("setName", [res.profile.first_name, res.profile.last_name, res.profile.middle_name].join(" "))
+  store.commit("setProfile", res.profile);
   store.commit("setProductsCount", res.products_count);
   emit("auth");
 };
@@ -101,8 +100,7 @@ const onRegister = async () => {
   }
   $cookies.set("user_id", res.user_id);
   $cookies.set("token", res.token);
-  store.commit("setLogin", res.profile.login);
-  store.commit("setName", [res.profile.first_name, res.profile.last_name, res.profile.middle_name].join(" "))
+  store.commit("setProfile", res.profile);
   store.commit("setProductsCount", 0);
   emit("auth");
 };

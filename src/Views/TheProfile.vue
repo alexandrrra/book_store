@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <MessageDialog :message="message" @close="message=''"/>
-    <div v-if="store.state.login === null" class="no-login">
+    <div v-if="store.state.profile === null" class="no-login">
       <h1>Вход не выполнен</h1>
     </div>
     <template v-else>
@@ -18,6 +18,10 @@
           <div :class="['navigation-item', route.params.variant==='orders' ? 'active' : '']" @click="setVariant('orders')">
             <font-awesome-icon icon="book" class="icon" />
             <span>Заказы</span>
+          </div>
+          <div v-if="store.state.profile.role==='admin'" :class="['navigation-item']" @click="router.push('/book-editor')">
+            <font-awesome-icon icon="plus" class="icon" />
+            <span>Добавить книгу</span>
           </div>
           <div class="navigation-item exit" @click="onExitClick()">
             <font-awesome-icon icon="person-walking-arrow-right" class="icon" />
@@ -162,8 +166,7 @@ const onSaveClick = async () => {
   }
   profile.value = { ...newProfile, password: "" };
   currentProfile.value = { ...newProfile, password: "" };
-  store.commit("setLogin", newProfile.login)
-  store.commit("setName", [newProfile.first_name, newProfile.last_name, newProfile.middle_name].join(" "))
+  store.commit("setProfile", newProfile)
   message.value = "Сохранено";
 };
 
@@ -171,8 +174,7 @@ const onExitClick = async () => {
   await deleteToken();
   $cookies.remove("user_id");
   $cookies.remove("token");
-  store.commit("setLogin", null);
-  store.commit("setName", "")
+  store.commit("setProfile", null);
   store.commit("setProductsCount", 0);
   router.push("/");
 };

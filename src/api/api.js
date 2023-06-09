@@ -5,7 +5,7 @@ axios.defaults.withCredentials = true;
 export const ROOT_URL = 'http://localhost:8080';
 const API_URL = `${ROOT_URL}/api`;
 
-const patchImageUrl = url => `${ROOT_URL}/${url}`;
+export const patchImageUrl = url => `${ROOT_URL}/${url || 'uploads/no-image.jpg'}`;
 
 // получить каталог книг
 export const getBooks = async (newOnly, filter) => {
@@ -381,5 +381,51 @@ export const getBestsellers = async () => {
   } catch (error) {
       console.error(error);
       return null;
+  }
+};
+
+export const createBook = async (book) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/books`,
+      book
+    );
+    return response.data.book_id;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const updateBook = async (book) => {
+  try {
+    await axios.post(
+      `${API_URL}/books/${book.book_id}`,
+      book
+    );
+    return book.book_id;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const uploadImage = async (book_id, file) => {
+  try {
+      const formData = new FormData();
+      formData.append('image', file);
+      await axios.post(
+          `${API_URL}/books/${book_id}/image`,
+          formData,
+          {
+              headers: {
+                  'Content-Type': "multipart/form-data"
+              }
+          }
+      );
+      return true;
+  } catch (error) {
+      console.error(error);
+      return false;
   }
 };

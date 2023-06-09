@@ -2,16 +2,12 @@ import { createStore } from 'vuex'
 
 const store = createStore({
   state: {
-    login: null,
-    name: "",
+    profile: null,
     productsCount: 0
   },
   mutations: {
-    setLogin(state, payload) {
-      state.login = payload;
-    },
-    setName(state, payload) {
-      state.name = payload;
+    setProfile(state, payload) {
+      state.profile = payload;
     },
     setProductsCount(state, payload) {
       state.productsCount = payload;

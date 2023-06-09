@@ -19,7 +19,7 @@
         <div @click="onNavClick('/profile/view')" :class="['pointer', route.name === 'Profile' ? 'active' : 'normal']">
           <div class="header-right-item">
             <font-awesome-icon icon="user" class="icon"/>
-            <span>{{ store.state.login || "Войти" }}</span>
+            <span>{{ store.state.profile !== null ? store.state.profile.login : "Войти" }}</span>
           </div>
         </div>
         <div @click="onNavClick('/favorite')" :class="['pointer', route.path === '/favorite' ? 'active' : 'normal']">
@@ -76,7 +76,7 @@ const query = ref('');
 const books = ref([]);
 
 const onNavClick = path => {
-  if (store.state.login) {
+  if (store.state.profile !== null) {
     router.push(path);
   } else if (path === "/profile/view") {
     loginDialogVisible.value = true;

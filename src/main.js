@@ -22,7 +22,8 @@ import BadgeDirective from "primevue/badgedirective";
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import InputText from "primevue/inputtext"
-import Button from "primevue/button"
+import InputNumber from "primevue/inputnumber"
+ import Button from "primevue/button"
 import Password from 'primevue/password';
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
@@ -48,6 +49,7 @@ app.directive('badge', BadgeDirective);
 
 app.component('font-awesome-icon', FontAwesomeIcon);
 app.component('InputText', InputText);
+app.component('InputNumber', InputNumber);
 app.component('Button', Button);
 app.component('Password', Password);
 app.component('Dialog', Dialog);

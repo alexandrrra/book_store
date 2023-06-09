@@ -7,6 +7,7 @@ import TheFavorite from "@/Views/TheFavorite.vue";
 import TheCart from "@/Views/TheCart.vue";
 import NewOrder from "@/Views/NewOrder.vue";
 import TheOrder from "@/Views/TheOrder.vue";
+import TheBookEditor from "@/Views/TheBookEditor.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -50,6 +51,16 @@ const router = createRouter({
       path:'/orders/:id',
       name:'Order',
       component: TheOrder
+    },
+    {
+      path:'/book-editor',
+      name:'CreateBook',
+      component: TheBookEditor
+    },
+    {
+      path:'/book-editor/:id',
+      name:'EditBook',
+      component: TheBookEditor
     }
   ],
 });

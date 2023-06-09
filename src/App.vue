@@ -29,15 +29,13 @@ onMounted(async () => {
   if (!res.success) {
     $cookies.remove("user_id");
     $cookies.remove("token");
-    store.commit("setLogin", null);
-    store.commit("setName", "")
+    store.commit("setProfile", null);
     store.commit("setProductsCount", 0);
     message.value = "";
     return;
   }
   $cookies.set("token", res.token);
-  store.commit("setLogin", res.profile.login);
-  store.commit("setName", [res.profile.first_name, res.profile.last_name, res.profile.middle_name].join(" "))
+  store.commit("setProfile", res.profile);
   store.commit("setProductsCount", res.products_count);
   message.value = "";
 });

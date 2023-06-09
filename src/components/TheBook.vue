@@ -51,7 +51,7 @@
   </div>
   <div v-if="variant==='card'" class="feedbacks">
     <div class="rating">Рейтинг: {{ (rating && rating.toFixed(2)) || 'нет' }}</div>
-    <div v-if="store.state.login" class="feedback personal">
+    <div v-if="store.state.profile !== null" class="feedback personal">
       <div class="feedback-login">Ваш отзыв</div>
       <Rating v-model="userFeedback.rating" :cancel="false"/>
       <InputText v-model="userFeedback.body" class="p-inputtext-sm user-feedback-body" />
@@ -101,7 +101,7 @@ const feedbacks = ref({...props.book.feedbacks});
 const quantity = ref(props.book.quantity);
 
 const onAddProductClick = async () => {
-  if (store.state.login === null) {
+  if (store.state.profile === null) {
     message.value = "Вход не выполнен";
     return;
   }
@@ -136,7 +136,7 @@ const deleteProductClick = async () => {
 };
 
 const addFavoriteClick = async () => {
-  if (store.state.login === null) {
+  if (store.state.profile === null) {
     message.value = "Вход не выполнен";
     return;
   }
