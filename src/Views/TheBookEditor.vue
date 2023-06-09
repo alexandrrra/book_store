@@ -24,6 +24,14 @@
         <div class="label">Цена</div>
         <InputNumber showButtons mode="currency" currency="RUB" v-model="price" class="p-inputtext-sm field" />
       </span>
+      <span>
+        <div class="label">Жанр</div>
+        <AutoComplete v-model="genre" optionLabel="genre_name" dropdown :suggestions="genres" @complete="searchGenre" class="field"/>
+      </span>
+      <span>
+        <div class="label">Издатель</div>
+        <AutoComplete v-model="publishment" optionLabel="publishment_name" dropdown :suggestions="publishments" @complete="searchPublishment" class="field"/>
+      </span>
       <span class="controls">
         <Button label="Сохранить" @click="onSaveClick()" />
       </span>
@@ -35,7 +43,7 @@
 
 import MessageDialog from '@/components/MessageDialog.vue';
 import { ref, onMounted } from 'vue';
-import { getOneBook, getAuthors, createBook, updateBook, uploadImage, patchImageUrl } from '../api/api';
+import { getOneBook, getAuthors, getGenres, getPublishments, createBook, updateBook, uploadImage, patchImageUrl } from '../api/api';
 import { useRoute } from "vue-router";
 import router from '@/router';
 import { useStore } from 'vuex';
@@ -59,6 +67,12 @@ const authors = ref([]);
 
 const price = ref(0);
 
+const genre = ref();
+const genres = ref([]);
+
+const publishment = ref();
+const publishments = ref([]);
+
 onMounted(async () => {
   if (route.name === "EditBook") {
     const book = await getOneBook(route.params.id);
@@ -71,6 +85,8 @@ onMounted(async () => {
     title.value = book.title;
     author.value = book.author;
     price.value = book.price;
+    genre.value = book.genre_name;
+    publishment.value = book.publishment_name;
   }
 });
 
@@ -78,9 +94,24 @@ const searchAuthor = async e => {
   authors.value = await getAuthors(e.query);
 }
 
+const searchGenre = async e => {
+  genres.value = await getGenres(e.query);
+}
+
+const searchPublishment = async e => {
+  publishments.value = await getPublishments(e.query);
+}
+
 const onSaveClick = async () => {
   const bookId = await (book_id.value ? updateBook : createBook)(
-    {book_id: book_id.value, title: title.value, author: author.value, price: price.value}
+    {
+      book_id: book_id.value,
+      title: title.value,
+      author: author.value,
+      price: price.value,
+      genre: genre.value,
+      publishment: publishment.value
+    }
   );
   if (bookId === null) {
     message.value = "Что-то пошло не так";
