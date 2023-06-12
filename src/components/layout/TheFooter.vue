@@ -4,41 +4,11 @@
       <router-link to="/" class="footer-container__logo-name">Буклиб</router-link>
       <span>Интернет-магазин книг</span>
     </div>
-<!--    <div class="footer-content">-->
-<!--      <div class="footer-top">-->
-<!--        <div class="footer-menu">-->
-<!--          <div class="footer-menu-column">-->
-<!--            <span class="footer-menu-title">Меню</span>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--          </div>-->
-<!--          <div class="footer-menu-column">-->
-<!--            <span class="footer-menu-title">Категории</span>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--          </div>-->
-<!--          <div class="footer-menu-column">-->
-<!--            <span class="footer-menu-title">О нас</span>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--            <router-link to="/" class="footer-menu-link">Новинки</router-link>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="footer-bottom">-->
-<!--        <span class="footer-bottom-name">-->
-<!--          Booklib-->
-<!--        </span>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="description">
+      <h1>Книжный магазин Буклиб</h1>
+      <p>Буклиб - сеть книжных магазинов, успешно работающих во всех регионах России</p>
+      <p>А еще это - крупный магазин книг. В нем вы можете заказыватьк книги в любое время 24 часа в сутки</p>
+    </div>
   </footer>
 </template>
 
@@ -49,6 +19,9 @@
 <style scoped>
 .footer{
   background-color: var(--blue);
+  display:flex;
+  justify-content:space-around;
+  padding:20px;
 }
 
 .footer_container__logo{
@@ -73,36 +46,7 @@
   color:var(--white);
 }
 
-.footer-content{
-  padding: 58px 82px 25px 82px;
-}
-
-.footer-top{
-  /*display: grid;
-  grid-template-columns: 540px 1fr;
-  column-gap: 110px;*/
-  border-bottom: 1px solid white;
-}
-
-.footer-menu{
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-}
-
-.footer-menu-title{
-  display: block;
-  margin-bottom: 12px;
-}
-
-.footer-menu-column{
-  justify-content: space-between;
-}
-
-.footer-menu-link{
-  display: block;
-  color:white;
-  font-size: 14px;
-  text-decoration: none;
-  margin-bottom: 12px;
+.description{
+  color:var(--white);
 }
 </style>

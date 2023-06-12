@@ -1,10 +1,15 @@
 <template>
-  <div class="filter-books">
-    <div class="filter">
-      <the-filter @apply-filter="applyFilter"></the-filter>
-    </div>
-    <div class="catalog">
-      <the-book v-for="book of books" :key="book.book_id" :book="book" variant="catalog"/>
+  <div class="container">
+    <div class="filter-books">
+      <div class="filter">
+        <the-filter @apply-filter="applyFilter"></the-filter>
+      </div>
+      <div class="name-and-catalog">
+        <h1>Каталог</h1>
+        <div class="catalog">
+          <the-book v-for="book of books" :key="book.book_id" :book="book" variant="catalog" class="book"/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +33,11 @@ const applyFilter = async (filter) => {
 </script>
 
 <style scoped>
+
+.container{
+  display:flex;
+}
+
 .filter-books {
   display: flex;
   justify-content: space-around;
@@ -38,8 +48,15 @@ const applyFilter = async (filter) => {
   margin: 50px 0;
 }
 
-.catalog {
+.name-and-catalog{
   width: 70%;
+}
+
+.name-and-catalog h1{
+  margin-top: 70px;
+}
+
+.catalog {
   margin: 50px 0;
   display: flex;
   flex-wrap: wrap;
@@ -47,5 +64,4 @@ const applyFilter = async (filter) => {
   align-items: center;
   justify-content: center;
 }
-
 </style>

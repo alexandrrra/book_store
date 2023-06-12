@@ -10,7 +10,12 @@
         <font-awesome-icon icon="book" class="icon-book"/>
         <span style="padding-left: 8px">Каталог</span>
       </Button>
-      <AutoComplete v-model="query" optionLabel="description" placeholder="Я ищу..." :suggestions="books" @complete="search" @item-select="change"/>
+      <div class="book-search">
+        <AutoComplete v-model="query" optionLabel="description" placeholder="Я ищу..." :suggestions="books" @complete="search" @item-select="change"/>
+        <div class="search">
+          <font-awesome-icon icon="search" class="icon-search"/>
+        </div>
+      </div>
     </div>
 
     <div class="header-right">
@@ -47,25 +52,6 @@ import LoginDialog from '@/components/LoginDialog.vue';
 import MessageDialog from '@/components/MessageDialog.vue';
 import { ref } from 'vue'
 import { getBooks } from '@/api/api';
-
-// const menu = [
-//   {
-//     name: 'Каталог',
-//     path: '/catalog'
-//   },
-//   {
-//     name: 'Название',
-//     path: '/path'
-//   },
-//   {
-//     name: 'Название',
-//     path: '/path'
-//   },
-//   {
-//     name: 'Название',
-//     path: '/path'
-//   }
-// ]
 
 const store = useStore();
 const router = useRouter();
@@ -112,8 +98,10 @@ const change = e => {
   /*position:fixed;*/
   background:white;
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /*display: grid;
+  grid-template-columns: repeat(3, 1fr);*/
+  display:flex;
+  justify-content: space-around;
   align-items: center;
   border-bottom:1px solid var(--black);
 }
@@ -138,6 +126,23 @@ const change = e => {
 .header_container__logo span{
   font-family: 'Playfair', serif;
 }
+
+.book-search{
+  display:flex;
+  justify-content:space-around;
+}
+
+.search{
+  background-color:#6366F1;
+  padding:10px;
+  border-radius:5px;
+}
+
+.icon-search{
+  padding-top:5px;
+  color:var(--white);
+}
+
 
 .header-container__search-catalog{
   display:flex;

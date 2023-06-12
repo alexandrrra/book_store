@@ -10,13 +10,6 @@
       </div>
     </div>
     <div class="filters-row">
-      <label class="filters-label">Я ищу...</label>
-      <div class="controls-row">
-        <InputText v-model="query" class="field" />
-        <Button icon="pi pi-times" text @click="query=''" />
-      </div>
-    </div>
-    <div class="filters-row">
       <label class="filters-label">Автор</label>
       <div class="controls-row">
         <AutoComplete v-model="author" dropdown forceSelection :suggestions="authors" @complete="searchAuthor"  class="field"/>
@@ -27,18 +20,18 @@
       <label class="filters-label">Жанр</label>
       <div class="controls-row">
         <AutoComplete v-model="genre" optionLabel="genre_name" dropdown forceSelection :suggestions="genres" @complete="searchGenre"  class="field"/>
-        <Button icon="pi pi-times" text @click="genre=undefined"/>
+        <Button icon="pi pi-times" text @click="genre=''"/>
       </div>
     </div>
     <div class="filters-row">
-      <label class="filters-label">Издатель</label>
+      <label class="filters-label">Издательство</label>
       <div class="controls-row">
         <AutoComplete v-model="publishment" optionLabel="publishment_name" dropdown forceSelection :suggestions="publishments" @complete="searchPublishment"  class="field"/>
-        <Button icon="pi pi-times" text @click="publishment=undefined"/>
+        <Button icon="pi pi-times" text @click="publishment=''"/>
       </div>
     </div>
     <div class="flex">
-      <Button label="Сохранить" @click="applyFilter()" size="small"/>
+      <Button label="Применить" @click="applyFilter()" size="small"/>
     </div>
   </div>
 </template>

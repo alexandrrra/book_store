@@ -6,7 +6,7 @@
               <img :src="slotProps.data.image_url" :alt="slotProps.data.title" @click="router.push(`/books/${slotProps.data.book_id}`)" class="image"/>
           </template>
       </Carousel>
-      <img src="@/assets/img/shelf.png" alt="">
+      <img src="@/assets/img/shelf.png" alt="" class="shelf">
     </div>
   </div>
 </template>
@@ -41,11 +41,17 @@
 }
 .banner-shelf{
   width:55%;
-  margin-top: 250px;
+  margin-top: 180px;
 }
 
 .image {
-  padding: 0 4px;
+  padding: 0 20px;
+  margin-top:100px;
+  width:90%;
+}
+
+.shelf{
+  margin-top:0;
 }
 
 </style>
