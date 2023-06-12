@@ -45,15 +45,17 @@ const applyFilter = async (filter) => {
 
 .filter {
   width: 20%;
-  margin: 50px 0;
+  margin: 30px 0;
 }
 
 .name-and-catalog{
   width: 70%;
+  /*margin-top:70px;*/
 }
 
 .name-and-catalog h1{
   margin-top: 70px;
+  align-self: start;
 }
 
 .catalog {

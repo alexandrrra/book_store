@@ -1,5 +1,6 @@
 <template>
-  <div class="banner">
+  <div class="banner" id="banner">
+    <h1>Лучшие книги <br> по мнению покупателей</h1>
     <div class="banner-shelf">
       <Carousel :value="books" :numVisible="3" :numScroll="1" :showNavigators="false" :showIndicators="false" circular :autoplayInterval="3000">
           <template #item="slotProps">
@@ -32,13 +33,22 @@
 <style scoped>
 .banner{
   background-image: url("@/assets/img/background.jpg");
-  position: relative;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding-right: 80px;
 }
+
+.banner h1{
+  margin-top:0;
+  font-family: 'Playfair', serif;
+  font-size: 50px;
+  font-weight:bold;
+  color:var(--white);
+
+}
+
 .banner-shelf{
   width:55%;
   margin-top: 180px;
@@ -51,7 +61,8 @@
 }
 
 .shelf{
-  margin-top:0;
+  margin-top:-65px;
+  padding-bottom:65px;
 }
 
 </style>

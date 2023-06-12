@@ -95,7 +95,6 @@ const change = e => {
 <style scoped>
 
 .header-container {
-  /*position:fixed;*/
   background:white;
   width: 100%;
   /*display: grid;

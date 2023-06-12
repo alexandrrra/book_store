@@ -96,6 +96,9 @@ const applyFilter = () => {
 
 <style scoped>
 .filters-container {
+  position:fixed;
+  width:20%;
+  margin-top:70px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;

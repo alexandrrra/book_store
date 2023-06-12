@@ -27,12 +27,13 @@ onMounted(async () => {
 <style scoped>
 .new-books{
   padding: 0 80px;
-  margin: 50px 0;
+  margin: 40px 0;
   display: flex;
   flex-wrap: wrap;
   gap: 5%;
   align-items: center;
   justify-content: center;
+  cursor:pointer;
 }
 
 .image {
