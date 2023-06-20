@@ -45,9 +45,9 @@
         </div>
       </template>
     </div>
-    <trmplate v-else>
+    <template v-else>
       {{ quantity }} шт.
-    </trmplate>
+    </template>
   </div>
   <div v-if="variant==='card'" class="feedbacks">
     <div class="rating">Рейтинг: {{ (rating && rating.toFixed(2)) || 'нет' }}</div>

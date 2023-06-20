@@ -7,7 +7,7 @@
       <div class="name-and-catalog">
         <h1>Каталог</h1>
         <div class="catalog">
-          <the-book v-for="book of books" :key="book.book_id" :book="book" variant="catalog" class="book"/>
+          <the-book v-for="book of books" :key="book.book_id" :book="book" variant="catalog"/>
         </div>
       </div>
     </div>

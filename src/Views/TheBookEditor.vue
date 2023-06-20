@@ -24,9 +24,17 @@
         <div class="label">Цена</div>
         <InputNumber showButtons mode="currency" currency="RUB" v-model="price" class="p-inputtext-sm field" />
       </span>
-      <span>
+      <span class="group">
         <div class="label">Жанр</div>
-        <AutoComplete v-model="genre" optionLabel="genre_name" dropdown :suggestions="genres" @complete="searchGenre" class="field"/>
+        <div v-for="genre of genres" :key="genre.genre_id" class="row item">
+          <div class="cell">{{ genre.genre_name }}</div>
+          <Button icon="pi pi-times" text @click="onGenreRemove(genre.genre_name)"/>
+        </div>
+        <div v-if="genres.length === 0" class="cell">Нет жанра</div>
+        <div class="row">
+          <AutoComplete v-model="currentGenre" optionLabel="genre_name" dropdown :suggestions="currentGenres" @complete="searchGenre" class="field"/>
+        </div>
+        <Button label="Задать жанр" @click="onGenreAdd()" class="field" />
       </span>
       <span>
         <div class="label">Издатель</div>
@@ -67,7 +75,8 @@ const authors = ref([]);
 
 const price = ref(0);
 
-const genre = ref();
+const currentGenre = ref();
+const currentGenres = ref([]);
 const genres = ref([]);
 
 const publishment = ref();
@@ -85,7 +94,7 @@ onMounted(async () => {
     title.value = book.title;
     author.value = book.author;
     price.value = book.price;
-    genre.value = book.genre_name;
+    genres.value = book.genres;
     publishment.value = book.publishment_name;
   }
 });
@@ -95,7 +104,7 @@ const searchAuthor = async e => {
 }
 
 const searchGenre = async e => {
-  genres.value = await getGenres(e.query);
+  currentGenres.value = await getGenres(e.query);
 }
 
 const searchPublishment = async e => {
@@ -109,7 +118,7 @@ const onSaveClick = async () => {
       title: title.value,
       author: author.value,
       price: price.value,
-      genre: genre.value,
+      genres: genres.value,
       publishment: publishment.value
     }
   );
@@ -146,6 +155,24 @@ const onImageInputChange = async e => {
     image_input.value.value = "";
 };
 
+const onGenreRemove = genre_name => {
+  genres.value = genres.value.filter(genre => genre.genre_name !== genre_name);
+}
+
+const onGenreAdd = () => {
+  const genre_name = (currentGenre.value && currentGenre.value.genre_name) || currentGenre.value;
+  if (!genre_name) {
+    return;
+  }
+  currentGenre.value = "";
+  for (const genre of genres.value) {
+    if (genre.genre_name === genre_name) {
+      return;
+    }
+  }
+  genres.value = [...genres.value, {genre_name}];
+}
+
 </script>
 
 <style scoped>
@@ -179,6 +206,26 @@ const onImageInputChange = async e => {
 
 .msg {
   margin: 30px 0;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.cell {
+  margin-right: auto;
+}
+
+.item {
+  border: silver 1px dashed;
+  border-radius: 8px;
+  padding: 0 0 0 8px;
 }
 
 </style>
